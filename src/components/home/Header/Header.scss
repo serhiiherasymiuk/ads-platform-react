@@ -1,7 +1,7 @@
 ul {
   display: flex;
   justify-content: space-between;
-  padding: 0 50px;
+  padding-right: 100px;
   li {
     list-style: none;
     display: flex;
@@ -11,6 +11,8 @@ ul {
     text-decoration: none;
     color: black;
     position: relative;
+    display: flex;
+    align-items: center;
   }
   a::before {
     content: "";
@@ -21,7 +23,7 @@ ul {
     background-color: #18272f;
     bottom: 0;
     left: 0;
-    top: 24px;
+    top: 65px;
     transform-origin: right;
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
@@ -30,5 +32,12 @@ ul {
   a:hover::before {
     transform-origin: left;
     transform: scaleX(1);
+    height: 4px;
   }
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  margin-right: 32px;
 }
