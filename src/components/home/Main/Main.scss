@@ -1,0 +1,35 @@
+.search-group {
+  input {
+    background-color: #f2f4f5;
+    border: 1px solid #e7e9eb;
+    border-left: 0;
+    padding: 30px;
+    padding-right: 250px;
+  }
+  input:focus {
+    outline: none;
+  }
+  i {
+    padding-left: 30px;
+    cursor: pointer;
+  }
+  button {
+    border: 0;
+    padding: 30px 100px;
+    background-color: #13ebdd;
+  }
+  background-color: #f2f4f5;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+  margin-left: 200px;
+  height: 65%;
+}
+
+#root {
+  height: 100vh;
+}
