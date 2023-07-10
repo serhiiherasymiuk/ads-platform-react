@@ -1,7 +1,10 @@
 ul {
   display: flex;
   justify-content: space-between;
-  padding-right: 100px;
+  padding: 30px 0;
+  padding-right: 50px;
+  padding-left: 0 !important;
+  margin: 0 !important;
   li {
     list-style: none;
     display: flex;
@@ -23,7 +26,7 @@ ul {
     background-color: #13ebdd;
     bottom: 0;
     left: 0;
-    top: 65px;
+    top: 30px;
     transform-origin: right;
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
@@ -34,10 +37,4 @@ ul {
     transform: scaleX(1);
     height: 4px;
   }
-}
-
-.logo {
-  width: 100px;
-  height: 100px;
-  margin-right: 32px;
 }
