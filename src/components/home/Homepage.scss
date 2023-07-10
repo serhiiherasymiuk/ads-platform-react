@@ -1,5 +1,5 @@
 .homepage {
-  display: flex;
   height: 100%;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 1fr 5fr 2fr;
 }
