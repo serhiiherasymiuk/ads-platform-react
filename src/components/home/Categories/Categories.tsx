@@ -15,6 +15,10 @@ export const Categories = () => {
 
   return (
     <>
+      <div className="profile-container">
+        <button>Login</button>
+        <button>Register</button>
+      </div>
       <div className="category-container">
         {categories.map((c: ICategory) => {
           return (

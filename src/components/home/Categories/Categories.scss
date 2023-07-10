@@ -3,10 +3,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 50px;
   grid-row-gap: 30px;
-  background-color: #f2f4f5;
   padding: 30px;
-  padding-top: 100px;
-  height: 100%;
   padding-bottom: 250px;
   div {
     display: flex;
@@ -19,5 +16,25 @@
       width: 100px;
       border-radius: 100%;
     }
+  }
+}
+
+.profile-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 25px;
+  gap: 30px;
+  i {
+    font-size: 50px;
+    padding-right: 10px;
+    cursor: pointer;
+  }
+  button {
+    border: 0;
+    padding: 5px 30px;
+    background-color: #13ebdd;
+    border-radius: 10px;
+    color: white;
   }
 }
