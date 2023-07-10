@@ -1,15 +1,3 @@
-
-import React from 'react';
-
-import './App.css';
-import MainRoutes from './Components/Route/MainRoutes';
-
-function App() {
-  return (
-    <div>
-      <MainRoutes />
-    </div>
-
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
