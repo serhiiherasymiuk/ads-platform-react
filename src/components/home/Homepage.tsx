@@ -4,6 +4,7 @@ import { Header } from "./Header/Header";
 import { Main } from "./Main/Main";
 import { Categories } from "./Categories/Categories";
 import { Logo } from "./Logo/Logo";
+import Posts from "../Posts/Posts";
 
 export const Homepage = () => {
   return (
@@ -19,6 +20,7 @@ export const Homepage = () => {
         <div>
           <Categories></Categories>
         </div>
+        
       </div>
     </>
   );

@@ -4,10 +4,10 @@ import Heart from '../assets/Heart';
 import './Post.css';
 import { Link, Route } from 'react-router-dom';
 import axios from 'axios';
-import { IAdvedismentItem } from './types';
+import { IAdvertisment } from '../../interfaces/advertisment';
 
 function Posts() {
-  const [posts, setPost] = useState<IAdvedismentItem[]>([]);
+  const [posts, setPost] = useState<IAdvertisment[]>([]);
   useEffect(() => { (async () => await Load())(); }, []);
   async function Load() {
     const result = await axios.get("http://localhost:5004/api/Advertisments");
@@ -28,7 +28,9 @@ function Posts() {
           <Link to='/view-post'>
             {posts.map((c) => {
               return (
-                <div className="card" >
+                <div>
+                <Link to={`view-post/${c.id}`}>
+                <div className="card"  key={c.id}>  
                   <div className="favorite">
                     <Heart></Heart>
                   </div>
@@ -43,7 +45,9 @@ function Posts() {
                     <span>{c.location}</span>
                   </div>
                 </div>
-              )
+                </Link>
+              </div>
+            )
             })}
           </Link>
         </div>
@@ -54,7 +58,9 @@ function Posts() {
         </div>
         {posts.map((c) => {
               return (
-                <div className="card" >
+                <div>
+                <Link to={`view-post/${c.id}`}>
+                <div className="card"  key={c.id}>  
                   <div className="favorite">
                     <Heart></Heart>
                   </div>
@@ -69,7 +75,9 @@ function Posts() {
                     <span>{c.location}</span>
                   </div>
                 </div>
-              )
+                </Link>
+              </div>
+            )
             })}
       </div>
     </div>
