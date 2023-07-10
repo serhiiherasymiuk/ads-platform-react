@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Heart from '../assets/Heart';
 import './Post.css';
 import { Link, Route } from 'react-router-dom';
+import axios from 'axios';
+import { IAdvedismentItem } from './types';
 
 function Posts() {
+  const [posts, setPost] = useState<IAdvedismentItem[]>([]);
+  useEffect(() => { (async () => await Load())(); }, []);
+  async function Load() {
+    const result = await axios.get("http://localhost:5004/api/Advertisments");
+    setPost(result.data);
+    console.log(result.data)
+
+  }
+
 
   return (
     <div className="postParentDiv">
@@ -14,28 +25,26 @@ function Posts() {
           <span>View more</span>
         </div>
         <div className="cards">
-           <Link to='/view-post'>
-          <div
-            className="card"
-          >
-            <div className="favorite">
-              <Heart></Heart>
-            </div>
-           
-            <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
-            </div>
-            <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
-            </div>
-            <div className="date">
-              <span>Tue May 04 2021</span>
-          
-            </div>
-          
-          </div>
+          <Link to='/view-post'>
+            {posts.map((c) => {
+              return (
+                <div className="card" >
+                  <div className="favorite">
+                    <Heart></Heart>
+                  </div>
+
+                  <div className="image">
+                    <img src={c.image} alt="" />
+                  </div>
+                  <div className="content">
+                    <p className="name">{c.name}</p>
+                  </div>
+                  <div className="date">
+                    <span>{c.location}</span>
+                  </div>
+                </div>
+              )
+            })}
           </Link>
         </div>
       </div>
@@ -43,24 +52,25 @@ function Posts() {
         <div className="heading">
           <span>Fresh recommendations</span>
         </div>
-        <div className="cards">
-          <div className="card">
-            <div className="favorite">
-              <Heart></Heart>
-            </div>
-            <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
-            </div>
-            <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
-            </div>
-            <div className="date">
-              <span>10/5/2021</span>
-            </div>
-          </div>
-        </div>
+        {posts.map((c) => {
+              return (
+                <div className="card" >
+                  <div className="favorite">
+                    <Heart></Heart>
+                  </div>
+
+                  <div className="image">
+                    <img src={c.image} alt="" />
+                  </div>
+                  <div className="content">
+                    <p className="name">{c.name}</p>
+                  </div>
+                  <div className="date">
+                    <span>{c.location}</span>
+                  </div>
+                </div>
+              )
+            })}
       </div>
     </div>
   );
