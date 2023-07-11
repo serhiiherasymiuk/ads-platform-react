@@ -7,6 +7,7 @@ import jwtDecode from "jwt-decode";
 import http_common from "../../http_common";
 import { IUser, AuthUserActionType } from "../../interfaces/user";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -17,11 +18,33 @@ export const Login = () => {
   };
 
   const loginSchema = Yup.object().shape({
-    email: Yup.string().required("Email is required").email("Invalid email"),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Invalid email")
+      .test(
+        "checkEmail",
+        "Email does not exist or is not registered yet",
+        async (value) => {
+          if (isSubmit) {
+            setIsSubmit(false);
+            try {
+              const result = await http_common.get(
+                `api/Users/checkEmailExists/${value}`
+              );
+              const { data } = result;
+              return data;
+            } catch (error) {
+              console.error("Error during email validation:", error);
+              return false;
+            }
+          } else return true;
+        }
+      ),
     password: Yup.string().required("Password is required"),
   });
 
   const navigate = useNavigate();
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
   const handleSubmit = async (values: ILogin) => {
     try {
@@ -98,7 +121,14 @@ export const Login = () => {
                 <label htmlFor="floatingInput">Password</label>
               </div>
 
-              <button type="submit">Login</button>
+              <button
+                type="submit"
+                onClick={() => {
+                  setIsSubmit(true);
+                }}
+              >
+                Login
+              </button>
               <p>
                 Don't have an account?
                 <span>
