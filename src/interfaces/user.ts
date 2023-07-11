@@ -9,7 +9,7 @@ export interface IUser {
   email: string;
   profilePicture: string;
   registrationDate: string;
-  roles: string[];
+  roles: string;
 }
 
 export interface IAuthUser {

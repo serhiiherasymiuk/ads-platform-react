@@ -9,6 +9,8 @@ const persistConfig = {
   storage,
 };
 
+const persistedReducer = persistReducer(persistConfig, AuthReducer);
+
 const customizedMiddleware = getDefaultMiddleware({
   serializableCheck: false,
 });
@@ -16,7 +18,7 @@ const customizedMiddleware = getDefaultMiddleware({
 export const store = configureStore({
   devTools: true,
   reducer: {
-    auth: AuthReducer,
+    auth: persistedReducer,
   },
   middleware: [thunk],
 });
