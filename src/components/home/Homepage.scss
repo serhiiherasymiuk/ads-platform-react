@@ -2,4 +2,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 5fr 2fr;
+  > div:last-child {
+    background-color: #f2f4f5;
+  }
 }

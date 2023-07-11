@@ -1,0 +1,42 @@
+.register-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  Form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    h1 {
+      text-align: center;
+    }
+  }
+  button {
+    border: 0;
+    padding: 5px 30px;
+    background-color: #13ebdd;
+    border-radius: 10px;
+    width: 100%;
+    color: white;
+  }
+  p {
+    display: flex;
+    justify-content: space-between;
+  }
+  span {
+    cursor: pointer;
+    a {
+      color: #13ebdd;
+      text-decoration: none;
+      position: relative;
+      align-items: center;
+    }
+  }
+  input:focus {
+    border-color: #13ebdd;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #13ebdd;
+    outline: 0 none;
+  }
+}
