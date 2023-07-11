@@ -1,9 +1,7 @@
-
 import React from 'react';
 import './App.css';
 import MainRoutes from './Components/Route/MainRoutes';
 import logo from "./logo.svg";
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { Homepage } from "./Components/home/Homepage";
 
