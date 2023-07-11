@@ -8,13 +8,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <BrowserRouter>
-
       <App />
     </BrowserRouter>,
 );

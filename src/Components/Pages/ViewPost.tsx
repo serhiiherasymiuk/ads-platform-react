@@ -1,6 +1,7 @@
 import React from 'react'
-
 import View from '../View/View'
+
+
 
 function ViewPost() {
     return (
