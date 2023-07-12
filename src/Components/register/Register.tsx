@@ -10,8 +10,6 @@ import { useState } from "react";
 YupPassword(Yup);
 
 export const Register = () => {
-  const dispatch = useDispatch();
-
   const initialValues: IRegister = {
     userName: "",
     email: "",

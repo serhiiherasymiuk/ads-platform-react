@@ -12,6 +12,13 @@ export interface IUser {
   roles: string;
 }
 
+export interface IUserEdit {
+  id: string;
+  userName: string;
+  email: string;
+  profilePicture: File | null;
+}
+
 export interface IAuthUser {
   isAuth: boolean;
   user?: IUser;
