@@ -3,6 +3,11 @@
   flex-direction: column;
   padding: 50px 100px;
   gap: 30px;
+  img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+  }
   > div {
     border: 1px solid #e7e9eb;
     border-radius: 15px;
@@ -54,9 +59,4 @@
       gap: 0;
     }
   }
-}
-
-.role-list {
-  display: flex;
-  flex-direction: row;
 }

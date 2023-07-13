@@ -3,7 +3,6 @@ import "./Profile.scss";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { IAuthUser } from "../../interfaces/user";
-import React from "react";
 export const Profile = () => {
   const navigate = useNavigate();
   const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
@@ -19,7 +18,10 @@ export const Profile = () => {
         <div>
           <div>
             {user?.profilePicture ? (
-              <p>{user?.profilePicture}</p>
+              <img
+                src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
+                alt=""
+              />
             ) : (
               <i className="bi bi-person-circle"></i>
             )}
@@ -46,12 +48,8 @@ export const Profile = () => {
               <p>{user?.email}</p>
             </div>
             <div>
-              <h5>Roles</h5>
-              <div className="role-list">
-                {user?.roles.map((r: any, id) => {
-                  return <p key={id}>{r}</p>;
-                })}
-              </div>
+              <h5>Phone Number</h5>
+              <p>{user?.phoneNumber}</p>
             </div>
           </div>
         </div>

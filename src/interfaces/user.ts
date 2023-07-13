@@ -9,13 +9,14 @@ export interface IUser {
   email: string;
   profilePicture: string;
   registrationDate: string;
+  phoneNumber: string;
   roles: string[];
 }
 
 export interface IUserEdit {
-  id: string;
   userName: string;
   email: string;
+  phoneNumber: string;
   profilePicture: File | null;
 }
 

@@ -64,6 +64,7 @@ export const Login = () => {
           email: user.email,
           profilePicture: user.profilePicture,
           registrationDate: user.registrationDate,
+          phoneNumber: user.phoneNumber,
           roles: user.roles,
         },
       });
