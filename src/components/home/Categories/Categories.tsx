@@ -32,7 +32,10 @@ export const Categories = () => {
           <button onClick={onLogoutHandler}>Logout</button>
           <Link className="nav-link" to="/profile">
             {user?.profilePicture ? (
-              <p>{user?.profilePicture}</p>
+              <img
+                src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
+                alt=""
+              />
             ) : (
               <i className="bi bi-person-circle"></i>
             )}

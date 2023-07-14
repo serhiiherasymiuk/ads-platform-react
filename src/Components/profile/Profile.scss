@@ -1,0 +1,62 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 100px;
+  gap: 30px;
+  img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+  }
+  > div {
+    border: 1px solid #e7e9eb;
+    border-radius: 15px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      > i {
+        font-size: 100px;
+        margin: -20px 0;
+      }
+    }
+    a {
+      text-decoration: none;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: white;
+      border: 1px solid #e7e9eb;
+      border-radius: 30px;
+      display: flex;
+      gap: 15px;
+      transition: all 0.3s;
+    }
+    button:hover {
+      border: 1px solid #00d7c9;
+      color: #00d7c9;
+    }
+  }
+}
+
+.personal-info {
+  display: flex;
+  flex-direction: column;
+  > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+  }
+}

@@ -9,7 +9,15 @@ export interface IUser {
   email: string;
   profilePicture: string;
   registrationDate: string;
-  roles: string;
+  phoneNumber: string;
+  roles: string[];
+}
+
+export interface IUserEdit {
+  userName: string;
+  email: string;
+  phoneNumber: string;
+  profilePicture: File | null;
 }
 
 export interface IAuthUser {
