@@ -7,9 +7,13 @@ import http_common from "../../http_common";
 import { useDispatch } from "react-redux";
 import YupPassword from "yup-password";
 import { useState } from "react";
+import jwtDecode from "jwt-decode";
+import { IUser, AuthUserActionType } from "../../interfaces/user";
 YupPassword(Yup);
 
 export const Register = () => {
+  const dispatch = useDispatch();
+
   const initialValues: IRegister = {
     userName: "",
     email: "",
@@ -76,10 +80,33 @@ export const Register = () => {
   const handleSubmit = async (values: IRegister) => {
     try {
       await registerSchema.validate(values);
-      await http_common.post("api/Users/register", values);
-      navigate("/login");
+      await http_common.post("api/Users/register", values).then(async () => {
+
+        const result = await http_common.post("api/Users/login",  {
+          email: values.email,
+          password: values.password,
+        });
+
+        const { data } = result;
+        const token = data.token;
+        localStorage.token = token;
+        var user = jwtDecode(token) as IUser;
+        dispatch({
+          type: AuthUserActionType.LOGIN_USER,
+          payload: {
+            id: user.id,
+            userName: user.userName,
+            email: user.email,
+            profilePicture: user.profilePicture,
+            registrationDate: user.registrationDate,
+            phoneNumber: user.phoneNumber,
+            roles: user.roles,
+          },
+        });
+        navigate("/");
+      });
     } catch (error) {
-      console.error("Error during rgister: ", error);
+      console.error("Error during register: ", error);
     }
   };
 
