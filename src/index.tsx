@@ -10,6 +10,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
 import jwtDecode from "jwt-decode";
 import { IUser, AuthUserActionType } from "./interfaces/user";
+import App from "./App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

@@ -144,7 +144,7 @@ export const ProfileEdit = () => {
                       : ""
                   }`}
                   placeholder="Image file"
-                  name="image"
+                  name="profilePicture"
                   aria-label="Image file"
                   aria-describedby="basic-addon2"
                   onChange={(event) => {
@@ -156,7 +156,7 @@ export const ProfileEdit = () => {
                   }}
                 />
                 <ErrorMessage
-                  name="image"
+                  name="profilePicture"
                   component="div"
                   className="invalid-feedback"
                 />
