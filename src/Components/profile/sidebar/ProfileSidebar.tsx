@@ -11,10 +11,6 @@ export const ProfileSidebar = () => {
     (store: any) => store.auth as IAuthUser
   );
 
-  useEffect(() => {
-    if (!isAuth) navigate("/register");
-  }, []);
-
   return (
     <>
       <div className="profile-sidebar">

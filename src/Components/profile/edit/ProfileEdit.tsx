@@ -17,10 +17,6 @@ export const ProfileEdit = () => {
   const navigate = useNavigate();
   const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
 
-  useEffect(() => {
-    if (!isAuth) navigate("/register");
-  }, []);
-
   const editSchema = Yup.object().shape({
     userName: Yup.string()
       .required("Name is required")

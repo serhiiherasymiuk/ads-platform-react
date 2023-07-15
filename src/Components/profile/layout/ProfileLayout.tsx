@@ -9,10 +9,6 @@ export const ProfileLayout = () => {
   const navigate = useNavigate();
   const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
 
-  useEffect(() => {
-    if (!isAuth) navigate("/register");
-  }, []);
-
   return (
     <>
       <div className="profile-layout">
