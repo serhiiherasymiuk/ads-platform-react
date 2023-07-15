@@ -6,11 +6,14 @@ import { ICategory } from "../../../interfaces/category";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthUserActionType, IAuthUser } from "../../../interfaces/user";
+import { googleLogout } from "@react-oauth/google";
 
 export const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
+  const { user, isAuth, isGoogle } = useSelector(
+    (store: any) => store.auth as IAuthUser
+  );
 
   const [categories, setCategories] = useState<ICategory[]>([]);
   useEffect(() => {
@@ -22,6 +25,7 @@ export const Categories = () => {
   const onLogoutHandler = () => {
     localStorage.removeItem("token");
     dispatch({ type: AuthUserActionType.LOGOUT_USER });
+    if (isGoogle) googleLogout();
     navigate("/");
   };
 
@@ -31,7 +35,9 @@ export const Categories = () => {
         <div className="profile-container">
           <button onClick={onLogoutHandler}>Logout</button>
           <Link className="nav-link" to="/profile">
-            {user?.profilePicture ? (
+            {isGoogle ? (
+              <img src={user?.profilePicture} alt="" />
+            ) : user?.profilePicture ? (
               <img
                 src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
                 alt=""

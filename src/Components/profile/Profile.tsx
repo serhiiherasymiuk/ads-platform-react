@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 import { IAuthUser } from "../../interfaces/user";
 export const Profile = () => {
   const navigate = useNavigate();
-  const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
+  const { user, isAuth, isGoogle } = useSelector(
+    (store: any) => store.auth as IAuthUser
+  );
 
   useEffect(() => {
     if (!isAuth) navigate("/register");
@@ -17,7 +19,9 @@ export const Profile = () => {
         <h1>My Profile</h1>
         <div>
           <div>
-            {user?.profilePicture ? (
+            {isGoogle ? (
+              <img src={user?.profilePicture} alt="" />
+            ) : user?.profilePicture ? (
               <img
                 src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
                 alt=""
@@ -27,31 +31,44 @@ export const Profile = () => {
             )}
             <h2>{user?.userName}</h2>
           </div>
-          <Link to="edit">
-            <button>
-              Edit<i className="bi bi-pencil"></i>
-            </button>
-          </Link>
+          {!isGoogle && (
+            <Link to="edit">
+              <button>
+                Edit <i className="bi bi-pencil"></i>
+              </button>
+            </Link>
+          )}
         </div>
         <div className="personal-info">
           <div>
             <h3>Personal Information</h3>
-            <Link to="edit">
-              <button>
-                Edit<i className="bi bi-pencil"></i>
-              </button>
-            </Link>
+            {!isGoogle && (
+              <Link to="edit">
+                <button>
+                  Edit <i className="bi bi-pencil"></i>
+                </button>
+              </Link>
+            )}
           </div>
-          <div>
+          {isGoogle ? (
             <div>
-              <h5>Email</h5>
-              <p>{user?.email}</p>
+              <div>
+                <h5>Email</h5>
+                <p>{user?.email}</p>
+              </div>
             </div>
+          ) : (
             <div>
-              <h5>Phone Number</h5>
-              <p>{user?.phoneNumber}</p>
+              <div>
+                <h5>Email</h5>
+                <p>{user?.email}</p>
+              </div>
+              <div>
+                <h5>Phone Number</h5>
+                <p>{user?.phoneNumber}</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>
