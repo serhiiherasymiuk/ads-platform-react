@@ -7,11 +7,9 @@ import { IAuthUser } from "../../../interfaces/user";
 export const ProfileSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
-
-  useEffect(() => {
-    if (!isAuth) navigate("/register");
-  }, []);
+  const { user, isAuth, isGoogle } = useSelector(
+    (store: any) => store.auth as IAuthUser
+  );
 
   return (
     <>
@@ -22,12 +20,14 @@ export const ProfileSidebar = () => {
         >
           Profile
         </Link>
-        <Link
-          className={location.pathname === "/profile/edit" ? "active" : ""}
-          to="edit"
-        >
-          Edit
-        </Link>
+        {!isGoogle && (
+          <Link
+            className={location.pathname === "/profile/edit" ? "active" : ""}
+            to="edit"
+          >
+            Edit
+          </Link>
+        )}
         <Link
           className={location.pathname === "admin" ? "active" : ""}
           to="admin"

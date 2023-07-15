@@ -1,5 +1,6 @@
 export enum AuthUserActionType {
   LOGIN_USER = "AUTH_LOGIN_USER",
+  LOGIN_GOOGLE_USER = "AUTH_LOGIN_GOOGLE_USER",
   LOGOUT_USER = "AUTH_LOGOUT_USER",
 }
 
@@ -22,5 +23,6 @@ export interface IUserEdit {
 
 export interface IAuthUser {
   isAuth: boolean;
+  isGoogle: boolean;
   user?: IUser;
 }
