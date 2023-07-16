@@ -26,7 +26,6 @@ export const Categories = () => {
     localStorage.removeItem("token");
     dispatch({ type: AuthUserActionType.LOGOUT_USER });
     if (isGoogle) googleLogout();
-    navigate("/");
   };
 
   return (

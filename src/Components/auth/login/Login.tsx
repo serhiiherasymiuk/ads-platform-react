@@ -1,11 +1,11 @@
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
-import { ILogin } from "../../interfaces/auth";
+import { ILogin } from "../../../interfaces/auth";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
-import http_common from "../../http_common";
-import { IUser, AuthUserActionType } from "../../interfaces/user";
+import http_common from "../../../http_common";
+import { IUser, AuthUserActionType } from "../../../interfaces/user";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";

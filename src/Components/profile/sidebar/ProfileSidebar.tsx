@@ -14,10 +14,15 @@ export const ProfileSidebar = () => {
   return (
     <>
       <div className="profile-sidebar">
+        <Link className={location.pathname === "/" ? "active" : ""} to="/">
+          <i className="bi bi-house"></i>
+          Home
+        </Link>
         <Link
           className={location.pathname === "/profile" ? "active" : ""}
           to="/profile"
         >
+          <i className="bi bi-person"></i>
           Profile
         </Link>
         {!isGoogle && (
@@ -25,15 +30,19 @@ export const ProfileSidebar = () => {
             className={location.pathname === "/profile/edit" ? "active" : ""}
             to="edit"
           >
+            <i className="bi bi-pencil"></i>
             Edit
           </Link>
         )}
-        <Link
-          className={location.pathname === "admin" ? "active" : ""}
-          to="admin"
-        >
-          Admin
-        </Link>
+        {user?.roles.includes("admin") && (
+          <Link
+            className={location.pathname.includes("/admin") ? "active" : ""}
+            to="admin"
+          >
+            <i className="bi bi-diagram-3"></i>
+            Admin
+          </Link>
+        )}
       </div>
     </>
   );

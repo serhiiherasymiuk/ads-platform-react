@@ -13,7 +13,7 @@ export const ProfileLayout = () => {
     <>
       <div className="profile-layout">
         <ProfileSidebar />
-        <main>
+        <main className="profile-content">
           <Outlet />
         </main>
       </div>
