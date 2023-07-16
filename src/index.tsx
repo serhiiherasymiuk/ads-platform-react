@@ -12,6 +12,8 @@ import jwtDecode from "jwt-decode";
 import { IUser, AuthUserActionType } from "./interfaces/user";
 import App from "./App";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -23,10 +25,46 @@ if (localStorage.token) {
   store.dispatch({
     type: AuthUserActionType.LOGIN_USER,
     payload: {
+      id: user.id,
+      userName: user.userName,
       email: user.email,
-      name: user.userName,
+      profilePicture: user.profilePicture,
+      registrationDate: user.registrationDate,
+      phoneNumber: user.phoneNumber,
+      roles: user.roles,
     },
   });
+}
+
+if (localStorage.access_token) {
+  const access_token = localStorage.access_token;
+  axios
+    .get(
+      `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${access_token}`,
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          Accept: "application/json",
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data) {
+        store.dispatch({
+          type: AuthUserActionType.LOGIN_GOOGLE_USER,
+          payload: {
+            id: res.data.id,
+            userName: res.data.name,
+            email: res.data.email,
+            profilePicture: res.data.picture,
+            registrationDate: "",
+            phoneNumber: "",
+            roles: ["user"],
+          },
+        });
+      }
+    })
+    .catch((err) => console.log(err));
 }
 
 root.render(

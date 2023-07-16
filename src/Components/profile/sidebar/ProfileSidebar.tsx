@@ -39,7 +39,7 @@ export const ProfileSidebar = () => {
             className={location.pathname.includes("/admin") ? "active" : ""}
             to="admin"
           >
-            <i className="bi bi-diagram-3"></i>
+            <i className="bi bi-gear"></i>
             Admin
           </Link>
         )}

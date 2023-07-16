@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { IAuthUser } from "./interfaces/user";
 import { AdminLayout } from "./components/admin/layout/AdminLayout";
 import { SubcategoryList } from "./components/admin/subcategory/list/SubcategoryList";
-import { SubcategoryCreate } from "./components/admin/subcategory/create/create/SubcategoryCreate";
+import { SubcategoryCreate } from "./components/admin/subcategory/create/SubcategoryCreate";
 import { SubcategoryEdit } from "./components/admin/subcategory/edit/SubcategoryEdit";
 
 function App() {

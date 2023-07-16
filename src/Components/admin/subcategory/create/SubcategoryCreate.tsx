@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 import {
   ISubcategory,
   ISubcategoryCreate,
-} from "../../../../../interfaces/subcategory";
-import http_common from "../../../../../http_common";
+} from "../../../../interfaces/subcategory";
+import http_common from "../../../../http_common";
 import { useEffect, useState } from "react";
-import { ICategory } from "../../../../../interfaces/category";
+import { ICategory } from "../../../../interfaces/category";
 import "./SubcategoryCreate.scss";
-import { RootState } from "../../../../../redux/store";
+import { RootState } from "../../../../redux/store";
 
 export const SubcategoryCreate = () => {
   const subcategories = useSelector(

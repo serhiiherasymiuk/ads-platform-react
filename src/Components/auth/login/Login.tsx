@@ -89,7 +89,7 @@ export const Login = () => {
           }
         )
         .then((res) => {
-          console.log(res.data);
+          localStorage.access_token = codeResponse.access_token;
           if (res.data) {
             dispatch({
               type: AuthUserActionType.LOGIN_GOOGLE_USER,
