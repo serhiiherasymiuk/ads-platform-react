@@ -1,14 +1,14 @@
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.scss";
-import { ILogin, IRegister } from "../../interfaces/auth";
+import { ILogin, IRegister } from "../../../interfaces/auth";
 import * as Yup from "yup";
-import http_common from "../../http_common";
+import http_common from "../../../http_common";
 import { useDispatch } from "react-redux";
 import YupPassword from "yup-password";
 import { useState } from "react";
 import jwtDecode from "jwt-decode";
-import { IUser, AuthUserActionType } from "../../interfaces/user";
+import { IUser, AuthUserActionType } from "../../../interfaces/user";
 YupPassword(Yup);
 
 export const Register = () => {
@@ -81,8 +81,7 @@ export const Register = () => {
     try {
       await registerSchema.validate(values);
       await http_common.post("api/Users/register", values).then(async () => {
-
-        const result = await http_common.post("api/Users/login",  {
+        const result = await http_common.post("api/Users/login", {
           email: values.email,
           password: values.password,
         });

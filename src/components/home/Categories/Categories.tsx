@@ -24,9 +24,9 @@ export const Categories = () => {
 
   const onLogoutHandler = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
     dispatch({ type: AuthUserActionType.LOGOUT_USER });
     if (isGoogle) googleLogout();
-    navigate("/");
   };
 
   return (

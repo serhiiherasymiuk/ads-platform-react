@@ -3,13 +3,14 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 import { AuthReducer } from "./reducers/AuthReducer";
+import SubcategoryReducer from "./reducers/SubcategoryReducer";
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, AuthReducer);
+const persistedReducer = persistReducer(persistConfig, SubcategoryReducer);
 
 const customizedMiddleware = getDefaultMiddleware({
   serializableCheck: false,
@@ -18,7 +19,8 @@ const customizedMiddleware = getDefaultMiddleware({
 export const store = configureStore({
   devTools: true,
   reducer: {
-    auth: persistedReducer,
+    auth: AuthReducer,
+    subcategory: persistedReducer,
   },
   middleware: [thunk],
 });

@@ -1,12 +1,12 @@
-.profile-sidebar {
+.admin-sidebar {
   display: flex;
   flex-direction: column;
-  padding: 50px;
-  margin-left: -50px;
+  padding: 50px 30px;
   gap: 30px;
   border-right: #e7e9eb solid 1px;
   height: 100%;
   position: fixed;
+  margin-left: -25px;
   a {
     text-decoration: none;
     color: black;
