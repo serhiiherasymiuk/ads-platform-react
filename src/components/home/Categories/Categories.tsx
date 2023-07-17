@@ -6,7 +6,9 @@ import { ICategory } from "../../../interfaces/category";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthUserActionType, IAuthUser } from "../../../interfaces/user";
+
 import { googleLogout } from "@react-oauth/google";
+
 
 export const Categories = () => {
   const dispatch = useDispatch();
@@ -28,7 +30,6 @@ export const Categories = () => {
     dispatch({ type: AuthUserActionType.LOGOUT_USER });
     if (isGoogle) googleLogout();
   };
-
   return (
     <>
       {isAuth ? (
@@ -67,8 +68,10 @@ export const Categories = () => {
                   alt={c.name}
                 />
                 <p>{c.name}</p>
+                
               </div>
             </React.Fragment>
+            
           );
         })}
       </div>

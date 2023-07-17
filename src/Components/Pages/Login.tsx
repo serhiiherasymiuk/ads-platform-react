@@ -1,5 +1,6 @@
 import React from "react";
-import { Login } from "../auth/login/Login";
+import { Login } from "../Login/Login";
+
 
 function LoginPage() {
   return (
