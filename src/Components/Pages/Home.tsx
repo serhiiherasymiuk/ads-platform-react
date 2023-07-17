@@ -1,10 +1,7 @@
-import React from 'react';
+import Banner from "../Baner/Banner";
+import Footer from "../Footer/Footer";
+import Posts from "../Posts/Posts";
 
-import Banner from '../Baner/Banner';
-
-
-import Posts from '../Posts/Posts';
-import Footer from '../Footer/Footer';
 
 function Home() {
   return (

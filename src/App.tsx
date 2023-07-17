@@ -1,14 +1,6 @@
 import "./App.css";
 import logo from "./logo.svg";
 import { Route, Routes } from "react-router-dom";
-import View from './Components/View/View';
-import List from './Components/Pages/List';
-
-import AdminLayout from './Components/Admin/container/AdminLayout';
-import CreateCategories from './Components/Admin/Category/create/CreateCategories';
-import EditCategory from './Components/Admin/Category/edit/EditCategories';
-import AdminDashboard from './Components/Admin/dashboard/AdminDashboard';
-import { ListCategory } from './Components/Admin/Category/list/ListCategories';
 import { Profile } from "./components/profile/Profile";
 import { ProfileLayout } from "./components/profile/layout/ProfileLayout";
 import { ProfileEdit } from "./components/profile/edit/ProfileEdit";
@@ -19,7 +11,14 @@ import { AdminLayout } from "./components/admin/layout/AdminLayout";
 import { SubcategoryList } from "./components/admin/subcategory/list/SubcategoryList";
 import { SubcategoryCreate } from "./components/admin/subcategory/create/SubcategoryCreate";
 import { SubcategoryEdit } from "./components/admin/subcategory/edit/SubcategoryEdit";
-
+import { Homepage } from "./components/home/Homepage";
+import { Register } from "./components/auth/register/Register";
+import List from "./components/Pages/List";
+import View from "./components/View/View";
+import CreateCategories from "./components/admin/Category/create/CreateCategories";
+import EditCategory from "./components/admin/Category/edit/EditCategories";
+import { ListCategory } from "./components/admin/Category/list/ListCategories";
+import AdminDashboard from "./components/admin/dashboard/AdminDashboard";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
@@ -29,23 +28,22 @@ function App() {
   return (
     <>
       <Routes>
-
         <Route path="/" element={<Homepage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="view-post/:id" element={<View/>} />
-        <Route path="list/:value" element={<List/>} />
-        <Route path={"/admin"} element={<AdminLayout/>}>
-                    <Route index element={<AdminDashboard/>}/>
-                    <Route path="category">
-                        <Route index element={<ListCategory/>}/>
-                        <Route path="create" element={<CreateCategories/>}/>
-                        <Route path="edit">
-                            <Route path=":id" element={<EditCategory/>}/>
-                        </Route>
-                    </Route>
-                </Route>
-        
+        <Route path="view-post/:id" element={<View />} />
+        <Route path="list/:value" element={<List />} />
+        <Route path={"/admin"} element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="category">
+            <Route index element={<ListCategory />} />
+            <Route path="create" element={<CreateCategories />} />
+            <Route path="edit">
+              <Route path=":id" element={<EditCategory />} />
+            </Route>
+          </Route>
+        </Route>
+
         {isAuth ? (
           <Route path={"/profile"} element={<ProfileLayout />}>
             <Route index element={<Profile />} />

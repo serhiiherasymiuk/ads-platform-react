@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 import "./Homepage.scss";
-import { Header } from "./Header/Header";
-import { Main } from "./Main/Main";
-import { Categories } from "./Categories/Categories";
-import { Logo } from "./Logo/Logo";
 import Posts from "../Posts/Posts";
-
-
+import { Categories } from "./categories/Categories";
+import { Logo } from "./logo/Logo";
+import { Header } from "./header/Header";
+import { Main } from "./main/Main";
 
 export const Homepage = () => {
   return (
@@ -22,7 +20,6 @@ export const Homepage = () => {
         <div>
           <Categories></Categories>
         </div>
-      
       </div>
     </>
   );
