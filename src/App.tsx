@@ -18,7 +18,6 @@ import View from "./components/View/View";
 import CreateCategories from "./components/admin/Category/create/CreateCategories";
 import EditCategory from "./components/admin/Category/edit/EditCategories";
 import { ListCategory } from "./components/admin/Category/list/ListCategories";
-import AdminDashboard from "./components/admin/dashboard/AdminDashboard";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
@@ -33,16 +32,6 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="view-post/:id" element={<View />} />
         <Route path="list/:value" element={<List />} />
-        <Route path={"/admin"} element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="category">
-            <Route index element={<ListCategory />} />
-            <Route path="create" element={<CreateCategories />} />
-            <Route path="edit">
-              <Route path=":id" element={<EditCategory />} />
-            </Route>
-          </Route>
-        </Route>
 
         {isAuth ? (
           <Route path={"/profile"} element={<ProfileLayout />}>
@@ -59,6 +48,13 @@ function App() {
                   <Route path="create" element={<SubcategoryCreate />} />
                   <Route path="edit">
                     <Route path=":id" element={<SubcategoryEdit />} />
+                  </Route>
+                </Route>
+                <Route path="category">
+                  <Route index element={<ListCategory />} />
+                  <Route path="create" element={<CreateCategories />} />
+                  <Route path="edit">
+                    <Route path=":id" element={<EditCategory />} />
                   </Route>
                 </Route>
               </Route>

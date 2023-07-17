@@ -16,6 +16,13 @@ export const AdminSidebar = () => {
           <i className="bi bi-diagram-3"></i>
           Subcategories
         </Link>
+        <Link
+          className={location.pathname.includes("/category") ? "active" : ""}
+          to="category"
+        >
+          <i className="bi bi-diagram-2"></i>
+          Categories
+        </Link>
       </div>
     </>
   );
