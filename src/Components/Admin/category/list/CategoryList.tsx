@@ -3,27 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import http_common from "../../../../http_common";
 import { Link } from "react-router-dom";
-import { ISubcategory } from "../../../../interfaces/subcategory";
-import "./SubcategoryList.scss";
+import "./CategoryList.scss";
 import { ModalDelete } from "../../../../common/ModalDelete";
-import { setSubcategories } from "../../../../redux/reducers/SubcategoryReducer";
+import { ICategory } from "../../../../interfaces/category";
+import { setCategories } from "../../../../redux/reducers/CategoryReducer";
 
-export const SubcategoryList = () => {
-  const subcategories = useSelector(
-    (state: RootState) => state.subcategory.subcategories
+export const CategoryList = () => {
+  const categories = useSelector(
+    (state: RootState) => state.category.categories
   );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    http_common.get("api/Subcategories").then((resp) => {
-      dispatch(setSubcategories(resp.data));
+    http_common.get("api/Categories").then((resp) => {
+      dispatch(setCategories(resp.data));
     });
   }, []);
 
   return (
     <>
-      <div className="subcategories">
+      <div className="categories">
         <Link to={"create"}>
           <button type="button" className="btn btn-dark">
             Create
@@ -36,24 +36,31 @@ export const SubcategoryList = () => {
               <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Description</th>
-              <th scope="col">Category id</th>
+              <th scope="col">Parent</th>
+              <th scope="col">Image</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {subcategories.map((s: ISubcategory) => {
+            {categories.map((c: ICategory) => {
               return (
-                <React.Fragment key={s.id}>
+                <React.Fragment key={c.id}>
                   <tr>
-                    <th scope="row">{s.id}</th>
-                    <td>{s.name}</td>
-                    <td>{s.description}</td>
-                    <td>{s.categoryId}</td>
+                    <th scope="row">{c.id}</th>
+                    <td>{c.name}</td>
+                    <td>{c.description}</td>
+                    <td>{c.parentId}</td>
+                    <td>
+                      <img
+                        src={`https://adsplatformstorage.blob.core.windows.net/category-images/${c.image}`}
+                        alt=""
+                      />
+                    </td>
                     <td>
                       <div className="buttons-container">
-                        <ModalDelete id={s.id} text={s.name}></ModalDelete>
+                        <ModalDelete id={c.id} text={c.name}></ModalDelete>
                         <Link
-                          to={`edit/${s.id}`}
+                          to={`edit/${c.id}`}
                           className="btn btn-warning btn-sm"
                         >
                           <i className="bi bi-pencil"></i>
