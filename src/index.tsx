@@ -13,7 +13,6 @@ import { IUser, AuthUserActionType } from "./interfaces/user";
 import App from "./App";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

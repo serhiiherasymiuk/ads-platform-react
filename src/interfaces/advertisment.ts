@@ -5,32 +5,33 @@ export interface IAdvertisment {
     name: string;
     image: string;
     description: string;
-    pirce:number;
+    price:number;
     contactPerson:string;
     contactPhoneNumber:string;
     location:string;
-    category?:ICategory[];
+    category?:ICategory;
   }
   
   export interface IAdvertismentCreate {
     name: string;
     image: File | null;
     description: string;
-    pirce:number;
+    price:number;
     contactPerson:string;
     contactPhoneNumber:string;
     location:string;
-    category?:ICategory[];
+    categoryid?:number;
   }
   
   export interface IAdvertismentEdit {
+    id:number;
     name: string;
     image: File | null;
     description: string;
-    pirce:number;
+    price:number;
     contactPerson:string;
     contactPhoneNumber:string;
     location:string;
-    category?:ICategory[];
+    categoryid?:string;
   }
   
