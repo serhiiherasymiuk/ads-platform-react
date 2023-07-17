@@ -1,13 +1,15 @@
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
-import { ILogin } from "../../interfaces/auth";
+import { ILogin } from "../../../interfaces/auth";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
-import http_common from "../../http_common";
-import { IUser, AuthUserActionType } from "../../interfaces/user";
+import http_common from "../../../http_common";
+import { IUser, AuthUserActionType } from "../../../interfaces/user";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -64,6 +66,7 @@ export const Login = () => {
           email: user.email,
           profilePicture: user.profilePicture,
           registrationDate: user.registrationDate,
+          phoneNumber: user.phoneNumber,
           roles: user.roles,
         },
       });
@@ -72,6 +75,41 @@ export const Login = () => {
       console.error("Error during login:", error);
     }
   };
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse: any) => {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${codeResponse.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          localStorage.access_token = codeResponse.access_token;
+          if (res.data) {
+            dispatch({
+              type: AuthUserActionType.LOGIN_GOOGLE_USER,
+              payload: {
+                id: res.data.id,
+                userName: res.data.name,
+                email: res.data.email,
+                profilePicture: res.data.picture,
+                registrationDate: "",
+                phoneNumber: "",
+                roles: ["user"],
+              },
+            });
+          }
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
+    },
+    onError: (error) => console.log("Login Failed:", error),
+  });
 
   return (
     <>
@@ -129,6 +167,7 @@ export const Login = () => {
               >
                 Login
               </button>
+              <button onClick={() => login()}>Sign in with Google</button>
               <p>
                 Don't have an account?
                 <span>
