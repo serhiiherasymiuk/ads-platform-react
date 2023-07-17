@@ -6,7 +6,6 @@ import { ICategory } from "../../../interfaces/category";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthUserActionType, IAuthUser } from "../../../interfaces/user";
-
 export const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,7 +23,6 @@ export const Categories = () => {
     dispatch({ type: AuthUserActionType.LOGOUT_USER });
     navigate("/");
   };
-
   return (
     <>
       {isAuth ? (
@@ -58,8 +56,10 @@ export const Categories = () => {
                   alt={c.name}
                 />
                 <p>{c.name}</p>
+                
               </div>
             </React.Fragment>
+            
           );
         })}
       </div>
