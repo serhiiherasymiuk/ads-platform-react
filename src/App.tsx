@@ -8,16 +8,13 @@ import { Login } from "./components/auth/login/Login";
 import { useSelector } from "react-redux";
 import { IAuthUser } from "./interfaces/user";
 import { AdminLayout } from "./components/admin/layout/AdminLayout";
-import { SubcategoryList } from "./components/admin/subcategory/list/SubcategoryList";
-import { SubcategoryCreate } from "./components/admin/subcategory/create/SubcategoryCreate";
-import { SubcategoryEdit } from "./components/admin/subcategory/edit/SubcategoryEdit";
 import { Homepage } from "./components/home/Homepage";
 import { Register } from "./components/auth/register/Register";
 import List from "./components/Pages/List";
 import View from "./components/View/View";
-import CreateCategories from "./components/admin/Category/create/CreateCategories";
-import EditCategory from "./components/admin/Category/edit/EditCategories";
-import { ListCategory } from "./components/admin/Category/list/ListCategories";
+import { CategoryCreate } from "./components/admin/category/create/CategoryCreate";
+import { CategoryEdit } from "./components/admin/category/edit/CategoryEdit";
+import { CategoryList } from "./components/admin/category/list/CategoryList";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
@@ -43,18 +40,11 @@ function App() {
             )}
             {user?.roles.includes("admin") ? (
               <Route path={"admin"} element={<AdminLayout />}>
-                <Route path="subcategories">
-                  <Route index element={<SubcategoryList />} />
-                  <Route path="create" element={<SubcategoryCreate />} />
-                  <Route path="edit">
-                    <Route path=":id" element={<SubcategoryEdit />} />
-                  </Route>
-                </Route>
                 <Route path="category">
-                  <Route index element={<ListCategory />} />
-                  <Route path="create" element={<CreateCategories />} />
+                  <Route index element={<CategoryList />} />
+                  <Route path="create" element={<CategoryCreate />} />
                   <Route path="edit">
-                    <Route path=":id" element={<EditCategory />} />
+                    <Route path=":id" element={<CategoryEdit />} />
                   </Route>
                 </Route>
               </Route>

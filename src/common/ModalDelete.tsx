@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { FC, useState } from "react";
 import http_common from "../http_common";
-import { deleteSubcategory } from "../redux/reducers/SubcategoryReducer";
+import { deleteCategory } from "../redux/reducers/CategoryReducer";
 
 interface Props {
   id: number;
@@ -17,10 +17,10 @@ export const ModalDelete: FC<Props> = ({ id, text }) => {
 
   const handleDelete = async () => {
     try {
-      await http_common.delete(`api/Subcategories/${id}`);
-      dispatch(deleteSubcategory(id));
+      await http_common.delete(`api/Categories/${id}`);
+      dispatch(deleteCategory(id));
     } catch (error) {
-      console.error("Error deleting subcategory:", error);
+      console.error("Error deleting category:", error);
     }
   };
 

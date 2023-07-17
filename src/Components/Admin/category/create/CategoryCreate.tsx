@@ -1,73 +1,52 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  ISubcategory,
-  ISubcategoryCreate,
-} from "../../../../interfaces/subcategory";
 import http_common from "../../../../http_common";
-import { useEffect, useState } from "react";
-import { ICategory } from "../../../../interfaces/category";
-import "./SubcategoryCreate.scss";
+import { ICategory, ICategoryCreate } from "../../../../interfaces/category";
+import "./CategoryCreate.scss";
 import { RootState } from "../../../../redux/store";
 
-export const SubcategoryCreate = () => {
-  const subcategories = useSelector(
-    (state: RootState) => state.subcategory.subcategories
+export const CategoryCreate = () => {
+  const categories = useSelector(
+    (state: RootState) => state.category.categories
   );
 
-  const [categories, setCategories] = useState<ICategory[]>([]);
-
-  useEffect(() => {
-    http_common.get("api/Categories").then((resp) => {
-      setCategories(resp.data);
-    });
-  }, []);
-
-  const initialValues: ISubcategoryCreate = {
+  const initialValues: ICategoryCreate = {
     name: "",
     description: "",
-    categoryId: null,
+    image: null,
+    parentId: null,
   };
 
-  const subcategorySchema = Yup.object().shape({
+  const categorySchema = Yup.object().shape({
     name: Yup.string()
       .required("Name is required")
       .max(255, "Name must be smaller")
-      .test(
-        "unique-subcategory",
-        "Subcategory already exists",
-        function (value) {
-          if (!value) {
-            return false;
-          }
-          const subcategoryExists = subcategories.some(
-            (s: ISubcategory) => s.name.toLowerCase() === value.toLowerCase()
-          );
-          return !subcategoryExists;
+      .test("unique-category", "Category already exists", function (value) {
+        if (!value) {
+          return false;
         }
-      ),
+        const categoryExists = categories.some(
+          (c: ICategory) => c.name.toLowerCase() === value.toLowerCase()
+        );
+        return !categoryExists;
+      }),
     description: Yup.string()
       .required("Description is required")
       .max(4000, "Description must be smaller"),
-    categoryId: Yup.number()
-      .required("Category is required")
-      .test("checkCategoryId", "Category is required", async (value) => {
-        if (value != -1) return true;
-        else return false;
-      }),
+    categoryId: Yup.number(),
+    image: Yup.mixed().required("Image is required"),
   });
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: ISubcategoryCreate) => {
+  const handleSubmit = async (values: ICategoryCreate) => {
     console.log(values);
     try {
-      await subcategorySchema.validate(values);
+      await categorySchema.validate(values);
 
-      await http_common.post("api/Subcategories", values, {
+      await http_common.post("api/Categories", values, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -75,7 +54,7 @@ export const SubcategoryCreate = () => {
 
       navigate("..");
     } catch (error) {
-      console.error("Error adding subcategory:", error);
+      console.error("Error adding category:", error);
     }
   };
 
@@ -84,10 +63,10 @@ export const SubcategoryCreate = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        validationSchema={subcategorySchema}
+        validationSchema={categorySchema}
       >
         {({ errors, touched, setFieldValue, handleBlur }) => (
-          <Form className="subcategory-form">
+          <Form className="category-form">
             <div className="form-floating">
               <Field
                 type="text"
@@ -127,21 +106,46 @@ export const SubcategoryCreate = () => {
                 className="invalid-feedback"
               />
             </div>
+            <div className="form-group">
+              <input
+                onBlur={handleBlur}
+                type="file"
+                className={`form-control ${
+                  errors.image && touched.image ? "is-invalid" : ""
+                }`}
+                placeholder="Image file"
+                name="image"
+                aria-label="Image file"
+                aria-describedby="basic-addon2"
+                onChange={(event) => {
+                  const file =
+                    event.currentTarget.files && event.currentTarget.files[0];
+                  if (file) {
+                    setFieldValue("image", file);
+                  }
+                }}
+              />
+              <ErrorMessage
+                name="image"
+                component="div"
+                className="invalid-feedback"
+              />
+            </div>
             <div className="form-floating">
               <select
                 onBlur={handleBlur}
                 className={`form-select ${
-                  errors.categoryId && touched.categoryId ? "is-invalid" : ""
+                  errors.parentId && touched.parentId ? "is-invalid" : ""
                 }`}
-                placeholder="categoryId"
-                name="categoryId"
-                aria-label="categoryId"
+                placeholder="parentId"
+                name="parentId"
+                aria-label="parentId"
                 aria-describedby="basic-addon2"
                 onChange={(event) => {
-                  setFieldValue("categoryId", event.currentTarget.value);
+                  setFieldValue("parentId", event.currentTarget.value);
                 }}
               >
-                <option value={-1}>Select a category</option>
+                <option value={undefined}>No parent category</option>
                 {categories.map((c: ICategory) => {
                   return (
                     <option key={c.id} value={c.id}>
@@ -150,9 +154,9 @@ export const SubcategoryCreate = () => {
                   );
                 })}
               </select>
-              <label>Category</label>
+              <label>Parent category</label>
               <ErrorMessage
-                name="categoryId"
+                name="parentId"
                 component="div"
                 className="invalid-feedback"
               />
