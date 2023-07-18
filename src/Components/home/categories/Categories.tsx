@@ -9,7 +9,6 @@ import { AuthUserActionType, IAuthUser } from "../../../interfaces/user";
 
 import { googleLogout } from "@react-oauth/google";
 
-
 export const Categories = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,10 +67,8 @@ export const Categories = () => {
                   alt={c.name}
                 />
                 <p>{c.name}</p>
-                
               </div>
             </React.Fragment>
-            
           );
         })}
       </div>

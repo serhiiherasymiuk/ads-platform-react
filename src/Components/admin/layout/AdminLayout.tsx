@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import "./AdminLayout.scss";
 import { AdminSidebar } from "../sidebar/AdminSidebar";
+import "./AdminLayout.scss";
 
 export const AdminLayout = () => {
   return (

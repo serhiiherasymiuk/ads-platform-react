@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import "./Homepage.scss";
-import Posts from "../Posts/Posts";
-import { Categories } from "./categories/Categories";
-import { Logo } from "./logo/Logo";
 import { Header } from "./header/Header";
 import { Main } from "./main/Main";
+import { Categories } from "./categories/Categories";
+import { Logo } from "./logo/Logo";
 
 export const Homepage = () => {
   return (

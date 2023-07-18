@@ -1,7 +1,7 @@
 import React from "react";
 import Posts from "../Posts/Posts";
-import { Main } from "../home/main/Main";
 import { Header } from "../home/header/Header";
+import { Main } from "../home/main/Main";
 
 function List() {
   return (
