@@ -15,6 +15,7 @@ import { CategoryCreate } from "./components/admin/category/create/CategoryCreat
 import { CategoryEdit } from "./components/admin/category/edit/CategoryEdit";
 import { CategoryList } from "./components/admin/category/list/CategoryList";
 import { AdminLayout } from "./components/admin/layout/AdminLayout";
+import { AdvertisementList } from "./components/admin/advertisement/list/AdvertisementList";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
@@ -46,6 +47,9 @@ function App() {
                   <Route path="edit">
                     <Route path=":id" element={<CategoryEdit />} />
                   </Route>
+                </Route>
+                <Route path="advertisement">
+                  <Route index element={<AdvertisementList />} />
                 </Route>
               </Route>
             ) : (
