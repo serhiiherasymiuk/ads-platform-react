@@ -1,0 +1,64 @@
+.advertisement-form {
+  .image-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    div,
+    label {
+      margin-bottom: 10px;
+    }
+    div {
+      margin-left: -30px;
+      i {
+        position: relative;
+        left: 110px;
+        bottom: 35px;
+        color: red;
+        font-size: 30px;
+        cursor: pointer;
+      }
+    }
+    img {
+      height: 100px;
+      width: 100px;
+      object-fit: scale-down;
+      border-radius: 30px;
+      transition: 0.1s linear;
+      border: 1px solid white;
+    }
+    img:hover {
+      border: 1px solid blue;
+    }
+  }
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 50px;
+  input[type="file"] {
+    display: none;
+  }
+  .custom-file-upload {
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    transition: 0.1s linear;
+    background-color: rgba(0, 0, 255, 0.166);
+    i {
+      font-size: 50px;
+      color: blue;
+      transition: 0.1s linear;
+    }
+  }
+  .custom-file-upload:hover {
+    background-color: rgba(0, 0, 255, 0.225);
+    i {
+      color: rgb(0, 0, 180);
+    }
+  }
+}

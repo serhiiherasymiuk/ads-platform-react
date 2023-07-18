@@ -4,19 +4,15 @@ import { RootState } from "../../../../redux/store";
 import http_common from "../../../../http_common";
 import { Link } from "react-router-dom";
 import "./AdvertisementList.scss";
-import { ModalDelete } from "../../../../common/ModalDelete";
 import { ICategory } from "../../../../interfaces/category";
 import { setCategories } from "../../../../redux/reducers/CategoryReducer";
 import {
   IAdvertisment,
   IAdvertismentImage,
 } from "../../../../interfaces/advertisment";
+import { ModalAdvertisementsDelete } from "../../../../common/ModalAdvertisementDelete";
 
 export const AdvertisementList = () => {
-  const categories = useSelector(
-    (state: RootState) => state.category.categories
-  );
-
   const dispatch = useDispatch();
 
   const [advertisements, setAdvertisements] = useState<IAdvertisment[]>([]);
@@ -29,6 +25,15 @@ export const AdvertisementList = () => {
       dispatch(setCategories(resp.data));
     });
   }, []);
+
+  const handleDelete = async (id: number) => {
+    try {
+      await http_common.delete(`api/Advertisments/${id}`);
+      setAdvertisements(advertisements.filter((a) => a.id !== id));
+    } catch (error) {
+      console.error("Error deleting advertisement:", error);
+    }
+  };
 
   return (
     <>
@@ -77,7 +82,11 @@ export const AdvertisementList = () => {
                     </td>
                     <td>
                       <div className="buttons-container">
-                        <ModalDelete id={a.id} text={a.name}></ModalDelete>
+                        <ModalAdvertisementsDelete
+                          id={a.id}
+                          text={a.name}
+                          deleteFunc={handleDelete}
+                        ></ModalAdvertisementsDelete>
                         <Link
                           to={`edit/${a.id}`}
                           className="btn btn-warning btn-sm"

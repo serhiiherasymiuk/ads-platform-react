@@ -16,27 +16,29 @@ export interface IAdvertisment {
   advertismentImages: IAdvertismentImage[];
   location: string;
   categoryId: number;
+  userId: string;
 }
 
 export interface IAdvertismentCreate {
   name: string;
-  image: File | null;
   description: string;
   price: number;
   contactPerson: string;
   contactPhoneNumber: string;
+  advertismentImages: File[];
   location: string;
-  categoryid?: number;
+  categoryId: number | null;
+  userId: string;
 }
 
 export interface IAdvertismentEdit {
-  id: number;
   name: string;
-  image: File | null;
   description: string;
   price: number;
   contactPerson: string;
   contactPhoneNumber: string;
+  advertismentImages: File[];
   location: string;
-  categoryid?: string;
+  categoryId: number;
+  userId: string;
 }

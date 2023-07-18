@@ -4,9 +4,9 @@ import { RootState } from "../../../../redux/store";
 import http_common from "../../../../http_common";
 import { Link } from "react-router-dom";
 import "./CategoryList.scss";
-import { ModalDelete } from "../../../../common/ModalDelete";
 import { ICategory } from "../../../../interfaces/category";
 import { setCategories } from "../../../../redux/reducers/CategoryReducer";
+import { ModalCategoryDelete } from "../../../../common/ModalCategoryDelete";
 
 export const CategoryList = () => {
   const categories = useSelector(
@@ -58,7 +58,10 @@ export const CategoryList = () => {
                     </td>
                     <td>
                       <div className="buttons-container">
-                        <ModalDelete id={c.id} text={c.name}></ModalDelete>
+                        <ModalCategoryDelete
+                          id={c.id}
+                          text={c.name}
+                        ></ModalCategoryDelete>
                         <Link
                           to={`edit/${c.id}`}
                           className="btn btn-warning btn-sm"

@@ -23,7 +23,9 @@ th:last-child {
   .advertisement-images {
     display: flex;
     flex-direction: column;
+    gap: 10px;
     img {
+      object-fit: scale-down;
       width: 150px;
     }
   }
