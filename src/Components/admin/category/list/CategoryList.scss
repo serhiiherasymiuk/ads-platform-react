@@ -1,0 +1,23 @@
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-layout,
+.admin-layout {
+  padding-right: 0;
+}
+
+th:last-child {
+  display: flex;
+  justify-content: center;
+}
+
+.categories {
+  padding: 50px;
+  img {
+    height: 50px;
+  }
+}
