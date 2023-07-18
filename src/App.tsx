@@ -3,18 +3,18 @@ import logo from "./logo.svg";
 import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IAuthUser } from "./interfaces/user";
-import { Login } from "./Components/auth/login/Login";
+import { Login } from "./components/auth/login/Login";
 import { List } from "reactstrap";
-import View from "./Components/View/View";
-import { Register } from "./Components/auth/register/Register";
-import { Homepage } from "./Components/home/Homepage";
-import { Profile } from "./Components/profile/Profile";
-import { ProfileEdit } from "./Components/profile/edit/ProfileEdit";
-import { ProfileLayout } from "./Components/profile/layout/ProfileLayout";
-import { CategoryCreate } from "./Components/admin/category/create/CategoryCreate";
-import { CategoryEdit } from "./Components/admin/category/edit/CategoryEdit";
-import { CategoryList } from "./Components/admin/category/list/CategoryList";
-import { AdminLayout } from "./Components/admin/layout/AdminLayout";
+import View from "./components/View/View";
+import { Register } from "./components/auth/register/Register";
+import { Homepage } from "./components/home/Homepage";
+import { Profile } from "./components/profile/Profile";
+import { ProfileEdit } from "./components/profile/edit/ProfileEdit";
+import { ProfileLayout } from "./components/profile/layout/ProfileLayout";
+import { CategoryCreate } from "./components/admin/category/create/CategoryCreate";
+import { CategoryEdit } from "./components/admin/category/edit/CategoryEdit";
+import { CategoryList } from "./components/admin/category/list/CategoryList";
+import { AdminLayout } from "./components/admin/layout/AdminLayout";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
