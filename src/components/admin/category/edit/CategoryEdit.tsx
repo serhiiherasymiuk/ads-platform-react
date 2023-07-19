@@ -60,7 +60,6 @@ export const CategoryEdit = () => {
 
   const handleSubmit = async (values: ICategoryEdit) => {
     try {
-      console.log(values);
       await categorySchema.validate(values);
 
       await http_common.put(`api/Categories/${id}`, values, {

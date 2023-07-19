@@ -20,7 +20,7 @@ export const AdminSidebar = () => {
           }
           to="advertisement"
         >
-          <i className="bi bi-diagram-3"></i>
+          <i className="bi bi-flag"></i>
           Advertisements
         </Link>
       </div>
