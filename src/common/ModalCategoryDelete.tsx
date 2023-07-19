@@ -10,7 +10,7 @@ interface Props {
   text: string;
 }
 
-export const ModalDelete: FC<Props> = ({ id, text }) => {
+export const ModalCategoryDelete: FC<Props> = ({ id, text }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const dispatch = useDispatch();

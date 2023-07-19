@@ -1,0 +1,32 @@
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-layout,
+.admin-layout {
+  padding-right: 0;
+}
+
+th:last-child {
+  display: flex;
+  justify-content: center;
+}
+
+.advertisements {
+  padding: 50px;
+  td:nth-child(3) {
+    width: 150px;
+  }
+  .advertisement-images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    img {
+      object-fit: scale-down;
+      width: 150px;
+    }
+  }
+}

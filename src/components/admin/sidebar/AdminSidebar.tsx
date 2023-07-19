@@ -14,6 +14,15 @@ export const AdminSidebar = () => {
           <i className="bi bi-diagram-3"></i>
           Categories
         </Link>
+        <Link
+          className={
+            location.pathname.includes("/advertisement") ? "active" : ""
+          }
+          to="advertisement"
+        >
+          <i className="bi bi-diagram-3"></i>
+          Advertisements
+        </Link>
       </div>
     </>
   );
