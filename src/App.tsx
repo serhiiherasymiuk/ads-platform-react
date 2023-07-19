@@ -3,17 +3,21 @@ import logo from "./logo.svg";
 import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IAuthUser } from "./interfaces/user";
-import { Login } from "./Components/auth/login/Login";
-import { CategoryCreate } from "./Components/Admin/category/create/CategoryCreate";
-import { CategoryEdit } from "./Components/Admin/category/edit/CategoryEdit";
-import { CategoryList } from "./Components/Admin/category/list/CategoryList";
-import { AdminLayout } from "./Components/Admin/layout/AdminLayout";
-import View from "./Components/View/View";
-import { Register } from "./Components/auth/register/Register";
-import { Homepage } from "./Components/home/Homepage";
-import { Profile } from "./Components/profile/Profile";
-import { ProfileEdit } from "./Components/profile/edit/ProfileEdit";
-import { ProfileLayout } from "./Components/profile/layout/ProfileLayout";
+import { Login } from "./components/auth/login/Login";
+import { List } from "reactstrap";
+import View from "./components/View/View";
+import { Register } from "./components/auth/register/Register";
+import { Homepage } from "./components/home/Homepage";
+import { Profile } from "./components/profile/Profile";
+import { ProfileEdit } from "./components/profile/edit/ProfileEdit";
+import { ProfileLayout } from "./components/profile/layout/ProfileLayout";
+import { CategoryCreate } from "./components/admin/category/create/CategoryCreate";
+import { CategoryEdit } from "./components/admin/category/edit/CategoryEdit";
+import { CategoryList } from "./components/admin/category/list/CategoryList";
+import { AdminLayout } from "./components/admin/layout/AdminLayout";
+import { AdvertisementList } from "./components/admin/advertisement/list/AdvertisementList";
+import { AdvertisementCreate } from "./components/admin/advertisement/create/AdvertisementCreate";
+import { AdvertisementEdit } from "./components/admin/advertisement/edit/AdvertisementEdit";
 import { Search } from "./Components/Search/Search";
 
 function App() {
@@ -45,6 +49,13 @@ function App() {
                   <Route path="create" element={<CategoryCreate />} />
                   <Route path="edit">
                     <Route path=":id" element={<CategoryEdit />} />
+                  </Route>
+                </Route>
+                <Route path="advertisement">
+                  <Route index element={<AdvertisementList />} />
+                  <Route path="create" element={<AdvertisementCreate />} />
+                  <Route path="edit">
+                    <Route path=":id" element={<AdvertisementEdit />} />
                   </Route>
                 </Route>
               </Route>
