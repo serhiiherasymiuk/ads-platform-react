@@ -8,16 +8,17 @@ import { IAdvertisment } from '../../interfaces/advertisment';
 import http_common from '../../http_common';
 
 
-function Posts() {
-  const [posts, setPost] = useState<IAdvertisment[]>([]);
-  useEffect(() => {
-    http_common
-      .get<IAdvertisment[]>("api/Advertisments")
-      .then((resp) => {
-        console.log("Advertisments", resp.data);
-        setPost(resp.data);
-      });
-  }, []);
+function Posts( {post}:{post:any}) {
+  const{name,price,image,location,id}=post;
+  // const [posts, setPost] = useState<IAdvertisment[]>([]);
+  // useEffect(() => {
+  //   http_common
+  //     .get<IAdvertisment[]>("api/Advertisments")
+  //     .then((resp) => {
+  //       console.log("Advertisments", resp.data);
+  //       setPost(resp.data);
+  //     });
+  // }, []);
   return (
     <div className="postParentDiv">
       <div className="moreView">
@@ -25,23 +26,20 @@ function Posts() {
           <div className="favorite">
             <Heart></Heart>
           </div>
-          {posts.map((c) => {
-            return (
-              <React.Fragment key={c.id}>
-                <Link to={`/view-post/${c.id}`}>
+              <React.Fragment key={id}>
+                <Link to={`/view-post/${id}`}>
                   <div className="image">
-                    <img src={c.image} alt="" />
+                    <img src={image} alt="" />
                   </div>
                   <div className="content">
-                    <p className="name">{c.name}</p>
+                  <p className="rate">&#x20B9; {price}</p>
+                  <p className="name">{name}</p>
                   </div>
                   <div className="date">
-                    <span>{c.location}</span>
+                    <span>{location}</span>
                   </div>
                 </Link>
               </React.Fragment>
-            )
-          })}
         </div>
       </div>
     </div>
