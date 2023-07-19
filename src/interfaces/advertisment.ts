@@ -1,5 +1,3 @@
-import { ICategory } from "./category";
-
 export interface IAdvertismentImage {
   id: number;
   image: string;
@@ -39,6 +37,6 @@ export interface IAdvertismentEdit {
   contactPhoneNumber: string;
   advertismentImages: File[];
   location: string;
-  categoryId: number;
+  categoryId: number | null;
   userId: string;
 }

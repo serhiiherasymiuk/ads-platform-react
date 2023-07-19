@@ -2,22 +2,74 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
 import http_common from "../../../../http_common";
-import { useNavigate } from "react-router-dom";
-import "./AdvertisementCreate.scss";
+import { useNavigate, useParams } from "react-router-dom";
+import "./AdvertisementEdit.scss";
 import { ICategory } from "../../../../interfaces/category";
 import * as Yup from "yup";
-import { IAdvertismentCreate } from "../../../../interfaces/advertisment";
+import {
+  IAdvertismentEdit,
+  IAdvertismentImage,
+} from "../../../../interfaces/advertisment";
 import { Formik, Field, ErrorMessage, Form } from "formik";
-import { IAuthUser } from "../../../../interfaces/user";
+import axios from "axios";
 
-export const AdvertisementCreate = () => {
-  const { user } = useSelector((store: any) => store.auth as IAuthUser);
-
+export const AdvertisementEdit = () => {
   const categories = useSelector(
     (state: RootState) => state.category.categories
   );
 
-  const initialValues: IAdvertismentCreate = {
+  const { id } = useParams();
+
+  useEffect(() => {
+    http_common.get(`api/Advertisments/${id}`).then((resp) => {
+      setInitialValues((prevValues) => ({
+        ...prevValues,
+        name: resp.data.name,
+        description: resp.data.description,
+        price: resp.data.price,
+        contactPerson: resp.data.contactPerson,
+        contactPhoneNumber: resp.data.contactPhoneNumber,
+        advertismentImages: [],
+        location: resp.data.location,
+        categoryId: resp.data.categoryId,
+        userId: resp.data.userId,
+      }));
+
+      const imageUrls = resp.data.advertismentImages.map(
+        (image: IAdvertismentImage) =>
+          `https://adsplatformstorage.blob.core.windows.net/advertisment-images/${image.image}`
+      );
+
+      downloadAndConvertImages(imageUrls).then((files) => {
+        setImages(files);
+      });
+    });
+  }, []);
+
+  async function downloadAndConvertImages(urls: string[]): Promise<File[]> {
+    const files: File[] = [];
+
+    for (const url of urls) {
+      const filename = url.substring(url.lastIndexOf("/") + 1);
+      const file = await downloadImage(filename);
+      files.push(file);
+    }
+
+    return files;
+  }
+
+  async function downloadImage(filename: string): Promise<File> {
+    const url = `https://adsplatformstorage.blob.core.windows.net/advertisment-images/${filename}`;
+
+    const response = await axios.get(url, {
+      responseType: "blob",
+    });
+    const blob = response.data;
+
+    return new File([blob], filename);
+  }
+
+  const [initialValues, setInitialValues] = useState<IAdvertismentEdit>({
     name: "",
     description: "",
     price: 0,
@@ -27,7 +79,7 @@ export const AdvertisementCreate = () => {
     location: "",
     categoryId: null,
     userId: "",
-  };
+  });
 
   const navigate = useNavigate();
 
@@ -61,10 +113,8 @@ export const AdvertisementCreate = () => {
       .matches(phoneRegExp, "Phone number is not valid"),
   });
 
-  const handleSubmit = async (values: IAdvertismentCreate) => {
+  const handleSubmit = async (values: IAdvertismentEdit) => {
     try {
-      if (user?.id !== undefined) values.userId = user?.id;
-
       await advertisementSchema.validate(values);
 
       const formData = new FormData();
@@ -81,13 +131,17 @@ export const AdvertisementCreate = () => {
         formData.append("categoryId", values.categoryId.toString());
       formData.append("userId", values.userId);
 
-      await http_common.post("api/Advertisments", formData, {
+      console.log(values);
+
+      await http_common.put(`api/Advertisments/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      navigate("..");
+      console.log(values);
+
+      navigate("../..");
     } catch (error) {
       console.error("Error adding category:", error);
     }
@@ -101,9 +155,10 @@ export const AdvertisementCreate = () => {
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={advertisementSchema}
+        enableReinitialize={true}
       >
         {({ errors, touched, setFieldValue, handleBlur }) => (
-          <Form className="advertisement-create-form">
+          <Form className="advertisement-edit-form">
             <div className="form-floating">
               <Field
                 type="text"
@@ -135,6 +190,7 @@ export const AdvertisementCreate = () => {
                 onChange={(event) => {
                   setFieldValue("description", event.currentTarget.value);
                 }}
+                value={initialValues.description}
               />
               <label>Description</label>
               <ErrorMessage
@@ -271,7 +327,11 @@ export const AdvertisementCreate = () => {
                 <option value={-1}>Select a category</option>
                 {categories.map((c: ICategory) => {
                   return (
-                    <option key={c.id} value={c.id}>
+                    <option
+                      selected={c.id === initialValues.categoryId}
+                      key={c.id}
+                      value={c.id}
+                    >
                       {c.name}
                     </option>
                   );
@@ -292,7 +352,7 @@ export const AdvertisementCreate = () => {
               type="submit"
               className="btn btn-primary"
             >
-              Create
+              Edit
             </button>
           </Form>
         )}
