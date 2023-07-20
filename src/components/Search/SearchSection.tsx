@@ -4,6 +4,7 @@ import { IAdvertisment } from "../../interfaces/advertisment";
 import http_common from "../../http_common";
 
 import { bool } from "yup";
+import { Value } from "sass";
 
 const SearchSection = () => {
   const navigate = useNavigate();
@@ -22,13 +23,15 @@ const SearchSection = () => {
         setPost(resp.data);
       });
   }, []);
-  const handleSearchClick = (isFirst:boolean) =>{
-    if (value === ""||value===undefined) { setPost(posts); return; }
-    const filterBySearch = posts.filter((item) => {
-        if (item.name.toLowerCase().includes(value.toLowerCase())) { return item; }
+  function handleSearchClick(){
+    if (value === ''||value===null) { return posts;}
+    const filterBySearch = 
+      posts.filter((item) => {
+        if (item.name?.toLowerCase().includes(value?.toLowerCase())) { return item; }
     })
     setPost(filterBySearch);
-    if(isFirst){navigate(`/search/${value}`);}
+    navigate(`/search/${value}`,{state:value,replace:true,});
+    window.location.reload()
   }
 
     return (
@@ -37,7 +40,7 @@ const SearchSection = () => {
         <div className="search-group">
           <i className="bi bi-search"></i>
           <input type="text" placeholder="Search for anything" value={value} onChange={(e) => setValue(e.target.value)} />
-          <button onClick={()=>handleSearchClick(true)} >Search</button>
+          <button onClick={handleSearchClick} >Search</button>
         </div>
         
       </>

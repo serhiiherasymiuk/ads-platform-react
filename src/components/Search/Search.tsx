@@ -7,12 +7,13 @@ import http_common from "../../http_common";
 import SearchSection from "./SearchSection";
 
 import { Header } from "../home/header/Header";
+import { replace } from "formik";
 
 export const Search = () => {
   const [posts, setPosts] = useState<IAdvertisment[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const [value] = useState(location.state);
+  const [value,setValue] = useState(location.state);
   const [post, setPost] = useState(posts);
 
 
@@ -25,19 +26,19 @@ export const Search = () => {
         setPosts(resp.data);
         setPost(resp.data);
         
-      })
-      .then(()=>handleSearchClick(false));
-      
-  },);
+      }).then(()=>handleSearchClick(false))
+    },);
 
-  const handleSearchClick = (isFirst:boolean) =>{
-    if (value === ""|| value===null) { setPost(posts); return; }
+  const handleSearchClick = (isF:boolean) =>{
+    if (value === ''||value===null) { setPost(posts); return; }
     const filterBySearch = posts.filter((item) => {
         if (item.name.toLowerCase()
-            .includes(value.toLowerCase())) { return item; }
+            .includes(value?.toLowerCase())) { return item; }
     })
     setPost(filterBySearch);
-    if(isFirst){navigate(`/search/${value}`);}
+   
+  if(isF){navigate(`/search/${value}`,{state:value,replace:true});}
+   
   }
  
   return (

@@ -21,18 +21,6 @@ export const Main = () => {
       <div className="main">
         <h1>What are you looking for?</h1>
         <SearchSection />
-        <div className="search-group">
-          <i className="bi bi-search"></i>
-          <input
-            type="text"
-            placeholder="Search for anything"
-            value={value}
-            onChange={handleChange}
-          />
-          <Link to={`list/${value}`}>
-            <button>Search</button>
-          </Link>
-        </div>
         <div>
           <p>Recent searches</p>
         </div>

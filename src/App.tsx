@@ -18,7 +18,8 @@ import { AdminLayout } from "./components/admin/layout/AdminLayout";
 import { AdvertisementList } from "./components/admin/advertisement/list/AdvertisementList";
 import { AdvertisementCreate } from "./components/admin/advertisement/create/AdvertisementCreate";
 import { AdvertisementEdit } from "./components/admin/advertisement/edit/AdvertisementEdit";
-import { Search } from "./Components/Search/Search";
+import { Search } from "./components/Search/Search";
+import SearchSection from "./components/Search/SearchSection";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
