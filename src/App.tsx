@@ -31,7 +31,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="view-post/:id" element={<View />} />
-        <Route path="list/:value" element={<List />} />
+        <Route path="search/:value" element={<List />} />
 
         {isAuth ? (
           <Route path={"/profile"} element={<ProfileLayout />}>

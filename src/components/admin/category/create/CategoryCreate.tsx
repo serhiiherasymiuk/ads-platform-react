@@ -6,6 +6,7 @@ import http_common from "../../../../http_common";
 import { ICategory, ICategoryCreate } from "../../../../interfaces/category";
 import "./CategoryCreate.scss";
 import { RootState } from "../../../../redux/store";
+import { useState } from "react";
 
 export const CategoryCreate = () => {
   const categories = useSelector(
@@ -58,6 +59,8 @@ export const CategoryCreate = () => {
     }
   };
 
+  const [image, setImage] = useState<File | null>();
+
   return (
     <>
       <Formik
@@ -66,7 +69,7 @@ export const CategoryCreate = () => {
         validationSchema={categorySchema}
       >
         {({ errors, touched, setFieldValue, handleBlur }) => (
-          <Form className="category-form">
+          <Form className="category-create-form">
             <div className="form-floating">
               <Field
                 type="text"
@@ -106,30 +109,34 @@ export const CategoryCreate = () => {
                 className="invalid-feedback"
               />
             </div>
-            <div className="form-group">
-              <input
-                onBlur={handleBlur}
-                type="file"
-                className={`form-control ${
-                  errors.image && touched.image ? "is-invalid" : ""
-                }`}
-                placeholder="Image file"
-                name="image"
-                aria-label="Image file"
-                aria-describedby="basic-addon2"
-                onChange={(event) => {
-                  const file =
-                    event.currentTarget.files && event.currentTarget.files[0];
-                  if (file) {
-                    setFieldValue("image", file);
-                  }
-                }}
-              />
-              <ErrorMessage
-                name="image"
-                component="div"
-                className="invalid-feedback"
-              />
+            <div className="image">
+              {image ? (
+                <div>
+                  <i
+                    onClick={() => {
+                      setImage(null);
+                    }}
+                    className="bi bi-x-circle-fill"
+                  ></i>
+                  <img src={URL.createObjectURL(image)} alt="" />
+                </div>
+              ) : (
+                <label className="custom-file-upload">
+                  <input
+                    multiple
+                    type="file"
+                    onChange={(event) => {
+                      const file =
+                        event.currentTarget.files &&
+                        event.currentTarget.files[0];
+                      if (file) {
+                        setImage(file);
+                      }
+                    }}
+                  />
+                  <i className="bi bi-plus"></i>
+                </label>
+              )}
             </div>
             <div className="form-floating">
               <select
@@ -162,7 +169,13 @@ export const CategoryCreate = () => {
               />
             </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button
+              onClick={() => {
+                setFieldValue("image", image);
+              }}
+              type="submit"
+              className="btn btn-primary"
+            >
               Create
             </button>
           </Form>

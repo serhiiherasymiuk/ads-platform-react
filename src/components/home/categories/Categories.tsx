@@ -6,19 +6,20 @@ import { ICategory } from "../../../interfaces/category";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthUserActionType, IAuthUser } from "../../../interfaces/user";
-
 import { googleLogout } from "@react-oauth/google";
 
 export const Categories = () => {
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
   const { user, isAuth, isGoogle } = useSelector(
     (store: any) => store.auth as IAuthUser
   );
 
   const [categories, setCategories] = useState<ICategory[]>([]);
   useEffect(() => {
-    http_common.get("api/Categories").then((resp) => {
+    http_common.get("api/Categories/getHead").then((resp) => {
       setCategories(resp.data);
     });
   }, []);
@@ -29,6 +30,7 @@ export const Categories = () => {
     dispatch({ type: AuthUserActionType.LOGOUT_USER });
     if (isGoogle) googleLogout();
   };
+  
   return (
     <>
       {isAuth ? (
