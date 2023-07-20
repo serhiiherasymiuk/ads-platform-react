@@ -1,0 +1,38 @@
+.search-group {
+    display: grid;
+    grid-template-columns: 1fr 10fr 3fr;
+    align-items: center;
+    input {
+      background-color: #f2f4f5;
+      border: 1px solid #e7e9eb;
+      border-left: 0;
+      padding: 30px;
+    }
+    input:focus {
+      outline: none;
+    }
+    i {
+      padding-left: 30px;
+      cursor: pointer;
+    }
+    button {
+      border: 0;
+      padding: 30px 100px;
+      background-color: #13ebdd;
+      color: white;
+    }
+    background-color: #f2f4f5;
+  }
+  
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    height: 75%;
+  }
+  
+  #root {
+    height: 100vh;
+  }
+  

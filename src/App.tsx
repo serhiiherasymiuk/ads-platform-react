@@ -18,6 +18,8 @@ import { AdminLayout } from "./components/admin/layout/AdminLayout";
 import { AdvertisementList } from "./components/admin/advertisement/list/AdvertisementList";
 import { AdvertisementCreate } from "./components/admin/advertisement/create/AdvertisementCreate";
 import { AdvertisementEdit } from "./components/admin/advertisement/edit/AdvertisementEdit";
+import { Search } from "./components/Search/Search";
+import SearchSection from "./components/Search/SearchSection";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
@@ -31,7 +33,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="view-post/:id" element={<View />} />
-        <Route path="list/:value" element={<List />} />
+        <Route path="search/:value" element={<Search />} />
 
         {isAuth ? (
           <Route path={"/profile"} element={<ProfileLayout />}>
