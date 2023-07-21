@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import "./CategoryEdit.scss";
 import http_common from "../../../../http_common";
 import { ICategory, ICategoryEdit } from "../../../../interfaces/category";
-
 import { RootState } from "../../../../redux/store";
+import axios from "axios";
 
 export const CategoryEdit = () => {
   const categories = useSelector(
@@ -17,7 +17,7 @@ export const CategoryEdit = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    http_common.get(`api/Categories/${id}`).then((resp) => {
+    http_common.get(`api/Categories/${id}`).then(async (resp) => {
       setInitialValues((prevValues) => ({
         ...prevValues,
         name: resp.data.name,
@@ -25,6 +25,16 @@ export const CategoryEdit = () => {
         image: resp.data.image,
         parentId: resp.data.parentId,
       }));
+
+      const response = await axios.get(
+        `https://adsplatformstorage.blob.core.windows.net/category-images/${resp.data.image}`,
+        {
+          responseType: "blob",
+        }
+      );
+      const blob = response.data;
+
+      setImage(new File([blob], resp.data.image));
     });
   }, []);
 
@@ -74,7 +84,7 @@ export const CategoryEdit = () => {
     }
   };
 
-  const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<File | null>();
 
   return (
     <>
@@ -85,7 +95,7 @@ export const CategoryEdit = () => {
         enableReinitialize={true}
       >
         {({ errors, touched, setFieldValue, handleBlur, values }) => (
-          <Form className="category-form">
+          <Form className="category-edit-form">
             <div className="form-floating">
               <Field
                 type="text"
@@ -128,44 +138,35 @@ export const CategoryEdit = () => {
               />
             </div>
 
-            <div className="form-group">
-              <input
-                onBlur={handleBlur}
-                type="file"
-                className={`form-control ${
-                  errors.image && touched.image ? "is-invalid" : ""
-                }`}
-                placeholder="Image file"
-                name="image"
-                aria-label="Image file"
-                aria-describedby="basic-addon2"
-                onChange={(event) => {
-                  const file =
-                    event.currentTarget.files && event.currentTarget.files[0];
-                  if (file) {
-                    setFieldValue("image", file);
-                    setFile(file);
-                  }
-                }}
-              />
-              <ErrorMessage
-                name="image"
-                component="div"
-                className="invalid-feedback"
-              />
+            <div className="image">
+              {image ? (
+                <div>
+                  <i
+                    onClick={() => {
+                      setImage(null);
+                    }}
+                    className="bi bi-x-circle-fill"
+                  ></i>
+                  <img src={URL.createObjectURL(image)} alt="" />
+                </div>
+              ) : (
+                <label className="custom-file-upload">
+                  <input
+                    multiple
+                    type="file"
+                    onChange={(event) => {
+                      const file =
+                        event.currentTarget.files &&
+                        event.currentTarget.files[0];
+                      if (file) {
+                        setImage(file);
+                      }
+                    }}
+                  />
+                  <i className="bi bi-plus"></i>
+                </label>
+              )}
             </div>
-
-            {file === null ? (
-              <img
-                src={`https://adsplatformstorage.blob.core.windows.net/category-images/${initialValues.image}`}
-                className="img-thumbnail"
-                alt="..."
-              ></img>
-            ) : values.image !== null ? (
-              <img src={URL.createObjectURL(values.image)} alt="" />
-            ) : (
-              <i className="bi bi-person-circle"></i>
-            )}
 
             <div className="form-floating">
               <select
@@ -202,7 +203,13 @@ export const CategoryEdit = () => {
               />
             </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button
+              onClick={() => {
+                setFieldValue("image", image);
+              }}
+              type="submit"
+              className="btn btn-primary"
+            >
               Edit
             </button>
           </Form>

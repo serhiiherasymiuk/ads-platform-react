@@ -1,6 +1,32 @@
-.category-form {
+.category-create-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding: 50px;
+  .image {
+    div {
+      height: 200px;
+      width: 200px;
+      i {
+        position: relative;
+        left: 180px;
+        bottom: 10px;
+        color: red;
+        font-size: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+  img {
+    height: 200px;
+    width: 200px;
+    margin-top: -40px;
+    object-fit: scale-down;
+    border-radius: 30px;
+    transition: 0.1s linear;
+    border: 1px solid white;
+  }
+  img:hover {
+    border: 1px solid blue;
+  }
 }

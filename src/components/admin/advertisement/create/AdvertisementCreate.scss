@@ -37,30 +37,4 @@
   flex-direction: column;
   gap: 15px;
   padding: 50px;
-  input[type="file"] {
-    display: none;
-  }
-  .custom-file-upload {
-    cursor: pointer;
-    width: 200px;
-    height: 200px;
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    transition: 0.1s linear;
-    background-color: rgba(0, 0, 255, 0.166);
-    i {
-      font-size: 100px;
-      color: blue;
-      transition: 0.1s linear;
-    }
-  }
-  .custom-file-upload:hover {
-    background-color: rgba(0, 0, 255, 0.225);
-    i {
-      color: rgb(0, 0, 180);
-    }
-  }
 }

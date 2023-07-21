@@ -4,7 +4,7 @@ import "./Header.scss";
 export const Header = () => {
   return (
     <>
-      <ul>
+      <ul className="header-ul">
         <li>
           <Link to={"/favorites"}>Favorites</Link>
           <Link to={"/items"}>Your items</Link>
