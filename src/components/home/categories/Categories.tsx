@@ -18,9 +18,15 @@ export const Categories = () => {
   );
 
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const [allCategories, setAllCategories] = useState<ICategory[]>([]);
+
   useEffect(() => {
     http_common.get("api/Categories/getHead").then((resp) => {
       setCategories(resp.data);
+    });
+
+    http_common.get("api/Categories").then((resp) => {
+      setAllCategories(resp.data);
     });
   }, []);
 
@@ -30,7 +36,61 @@ export const Categories = () => {
     dispatch({ type: AuthUserActionType.LOGOUT_USER });
     if (isGoogle) googleLogout();
   };
-  
+
+  const [subcategories, setSubcategories] = useState<{
+    [parentId: number]: ICategory[];
+  }>({});
+
+  const [hoveredCategories, setHoveredCategories] = useState<number[]>([]);
+
+  const fetchSubcategories = (id: number) => {
+    setSubcategories((prevSubcategories) => ({
+      ...prevSubcategories,
+      [id]: allCategories.filter((c) => c.parentId === id),
+    }));
+  };
+
+  const handleSubcategoryMouseEnter = (id: number) => {
+    setHoveredCategories((prevHoveredCategories) => [
+      ...prevHoveredCategories,
+      id,
+    ]);
+    if (!subcategories[id]) {
+      fetchSubcategories(id);
+    }
+  };
+
+  const handleSubcategoryMouseLeave = (id: number) => {
+    setHoveredCategories((prevHoveredCategories) =>
+      prevHoveredCategories.filter((categoryId) => categoryId !== id)
+    );
+  };
+
+  const renderSubcategories = (id: number) => {
+    if (hoveredCategories.includes(id) && subcategories[id]?.length) {
+      return (
+        <ul>
+          <i className="bi bi-caret-right-fill category-icon"></i>
+          {subcategories[id].map((subcategory: ICategory) => (
+            <li
+              key={subcategory.id}
+              onMouseEnter={() => handleSubcategoryMouseEnter(subcategory.id)}
+              onMouseLeave={() => handleSubcategoryMouseLeave(subcategory.id)}
+            >
+              <img
+                src={`https://adsplatformstorage.blob.core.windows.net/category-images/${subcategory.image}`}
+                alt={subcategory.name}
+              />
+              <p>{subcategory.name}</p>
+              <div>{renderSubcategories(subcategory.id)}</div>
+            </li>
+          ))}
+        </ul>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
       {isAuth ? (
@@ -63,12 +123,20 @@ export const Categories = () => {
         {categories.map((c: ICategory) => {
           return (
             <React.Fragment key={c.id}>
-              <div>
+              <div
+                onMouseEnter={() => handleSubcategoryMouseEnter(c.id)}
+                onMouseLeave={() => handleSubcategoryMouseLeave(c.id)}
+              >
                 <img
                   src={`https://adsplatformstorage.blob.core.windows.net/category-images/${c.image}`}
                   alt={c.name}
                 />
                 <p>{c.name}</p>
+                {hoveredCategories.find((x) => x === c.id) && (
+                  <div className="categories active">
+                    {renderSubcategories(c.id)}
+                  </div>
+                )}
               </div>
             </React.Fragment>
           );
