@@ -1,9 +1,15 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Main.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { IAdvertisment } from "../../../interfaces/advertisment";
+import http_common from "../../../http_common";
+import { Search } from "../../Search/Search";
+import SearchSection from "../../Search/SearchSection";
 
 export const Main = () => {
   const location = useLocation();
+
+  const [query, setQuery] = useState(location.state?.value);
   const [value, setValue] = useState(location.state?.value);
 
   const handleChange = (e: any) => {
@@ -14,18 +20,7 @@ export const Main = () => {
     <>
       <div className="main">
         <h1>What are you looking for?</h1>
-        <div className="search-group">
-          <i className="bi bi-search"></i>
-          <input
-            type="text"
-            placeholder="Search for anything"
-            value={value}
-            onChange={handleChange}
-          />
-          <Link to={`list/${value}`}>
-            <button>Search</button>
-          </Link>
-        </div>
+        <SearchSection />
         <div>
           <p>Recent searches</p>
         </div>
