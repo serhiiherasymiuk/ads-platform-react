@@ -125,10 +125,10 @@ export const CategoryEdit = () => {
                 name="description"
                 aria-label="Description"
                 aria-describedby="basic-addon2"
+                value={values.description}
                 onChange={(event) => {
                   setFieldValue("description", event.currentTarget.value);
                 }}
-                value={initialValues.description}
               />
               <label>Description</label>
               <ErrorMessage
@@ -150,8 +150,13 @@ export const CategoryEdit = () => {
                   <img src={URL.createObjectURL(image)} alt="" />
                 </div>
               ) : (
-                <label className="custom-file-upload">
+                <label
+                  className={`custom-file-upload ${
+                    errors.image && touched.image ? "is-image-invalid" : ""
+                  }`}
+                >
                   <input
+                    onBlur={handleBlur}
                     multiple
                     type="file"
                     onChange={(event) => {
@@ -164,6 +169,7 @@ export const CategoryEdit = () => {
                     }}
                   />
                   <i className="bi bi-plus"></i>
+                  <i className="bi bi-exclamation-circle exc"></i>
                 </label>
               )}
             </div>

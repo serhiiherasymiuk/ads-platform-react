@@ -59,7 +59,7 @@ export const CategoryCreate = () => {
     }
   };
 
-  const [image, setImage] = useState<File | null>();
+  const [image, setImage] = useState<File | null>(null);
 
   return (
     <>
@@ -121,7 +121,11 @@ export const CategoryCreate = () => {
                   <img src={URL.createObjectURL(image)} alt="" />
                 </div>
               ) : (
-                <label className="custom-file-upload">
+                <label
+                  className={`custom-file-upload ${
+                    errors.image && touched.image ? "is-image-invalid" : ""
+                  }`}
+                >
                   <input
                     multiple
                     type="file"
@@ -135,6 +139,7 @@ export const CategoryCreate = () => {
                     }}
                   />
                   <i className="bi bi-plus"></i>
+                  <i className="bi bi-exclamation-circle exc"></i>
                 </label>
               )}
             </div>

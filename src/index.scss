@@ -31,10 +31,33 @@ code {
     color: blue;
     transition: 0.1s linear;
   }
+  .exc {
+    position: fixed;
+    margin-left: 150px;
+    margin-bottom: 150px;
+    color: red;
+    font-size: 30px;
+    cursor: pointer;
+    display: none;
+  }
 }
 .custom-file-upload:hover {
   background-color: rgba(0, 0, 255, 0.225);
   i {
     color: rgb(0, 0, 180);
   }
+  .exc {
+    color: red;
+  }
+}
+
+.is-image-invalid {
+  border: 1px solid red;
+  .exc {
+    display: block;
+  }
+}
+
+.is-image-invalid:hover {
+  box-shadow: rgba(255, 0, 0, 0.205) 0px 0px 0px 4px;
 }
