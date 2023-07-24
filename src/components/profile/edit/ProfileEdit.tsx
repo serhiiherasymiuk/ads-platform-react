@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import "./ProfileEdit.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AuthUserActionType,
   IAuthUser,
-  IUser,
   IUserEdit,
 } from "../../../interfaces/user";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -15,7 +14,7 @@ import http_common from "../../../http_common";
 export const ProfileEdit = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
+  const { user } = useSelector((store: any) => store.auth as IAuthUser);
 
   const editSchema = Yup.object().shape({
     userName: Yup.string()
@@ -25,7 +24,7 @@ export const ProfileEdit = () => {
       .test("checkUsername", "Name already exists", async (value) => {
         if (isSubmit) {
           setIsSubmit(false);
-          if (value.toLowerCase() == user?.userName.toLowerCase()) return true;
+          if (value.toLowerCase() === user?.userName.toLowerCase()) return true;
           try {
             const result = await http_common.get(
               `api/Users/checkUsernameExists/${value}`
@@ -44,7 +43,7 @@ export const ProfileEdit = () => {
       .test("checkEmail", "Email already registered", async (value) => {
         if (isSubmit) {
           setIsSubmit(false);
-          if (value.toLowerCase() == user?.email.toLowerCase()) return true;
+          if (value.toLowerCase() === user?.email.toLowerCase()) return true;
           try {
             const result = await http_common.get(
               `api/Users/checkEmailExists/${value}`
@@ -79,22 +78,20 @@ export const ProfileEdit = () => {
         },
       });
 
-      const result = await http_common
-        .get(`api/Users/${user?.id}`)
-        .then((resp) => {
-          dispatch({
-            type: AuthUserActionType.LOGIN_USER,
-            payload: {
-              id: resp.data.id,
-              userName: values.userName,
-              email: values.email,
-              profilePicture: resp.data.profilePicture,
-              registrationDate: resp.data.registrationDate,
-              phoneNumber: values.phoneNumber,
-              roles: resp.data.roles,
-            },
-          });
+      await http_common.get(`api/Users/${user?.id}`).then((resp) => {
+        dispatch({
+          type: AuthUserActionType.LOGIN_USER,
+          payload: {
+            id: resp.data.id,
+            userName: values.userName,
+            email: values.email,
+            profilePicture: resp.data.profilePicture,
+            registrationDate: resp.data.registrationDate,
+            phoneNumber: values.phoneNumber,
+            roles: resp.data.roles,
+          },
         });
+      });
 
       navigate("/profile");
     } catch (error) {

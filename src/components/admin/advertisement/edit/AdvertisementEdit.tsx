@@ -7,9 +7,9 @@ import "./AdvertisementEdit.scss";
 import { ICategory } from "../../../../interfaces/category";
 import * as Yup from "yup";
 import {
-  IAdvertismentEdit,
-  IAdvertismentImage,
-} from "../../../../interfaces/advertisment";
+  IAdvertisementEdit,
+  IAdvertisementImage,
+} from "../../../../interfaces/advertisement";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import axios from "axios";
 
@@ -21,7 +21,7 @@ export const AdvertisementEdit = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    http_common.get(`api/Advertisments/${id}`).then((resp) => {
+    http_common.get(`api/Advertisements/${id}`).then((resp) => {
       setInitialValues((prevValues) => ({
         ...prevValues,
         name: resp.data.name,
@@ -29,15 +29,15 @@ export const AdvertisementEdit = () => {
         price: resp.data.price,
         contactPerson: resp.data.contactPerson,
         contactPhoneNumber: resp.data.contactPhoneNumber,
-        advertismentImages: [],
+        advertisementImages: [],
         location: resp.data.location,
         categoryId: resp.data.categoryId,
         userId: resp.data.userId,
       }));
 
-      const imageUrls = resp.data.advertismentImages.map(
-        (image: IAdvertismentImage) =>
-          `https://adsplatformstorage.blob.core.windows.net/advertisment-images/${image.image}`
+      const imageUrls = resp.data.advertisementImages.map(
+        (image: IAdvertisementImage) =>
+          `https://adsplatformstorage.blob.core.windows.net/advertisement-images/${image.image}`
       );
 
       downloadAndConvertImages(imageUrls).then((files) => {
@@ -59,7 +59,7 @@ export const AdvertisementEdit = () => {
   }
 
   async function downloadImage(filename: string): Promise<File> {
-    const url = `https://adsplatformstorage.blob.core.windows.net/advertisment-images/${filename}`;
+    const url = `https://adsplatformstorage.blob.core.windows.net/advertisement-images/${filename}`;
 
     const response = await axios.get(url, {
       responseType: "blob",
@@ -69,13 +69,13 @@ export const AdvertisementEdit = () => {
     return new File([blob], filename);
   }
 
-  const [initialValues, setInitialValues] = useState<IAdvertismentEdit>({
+  const [initialValues, setInitialValues] = useState<IAdvertisementEdit>({
     name: "",
     description: "",
     price: 0,
     contactPerson: "",
     contactPhoneNumber: "",
-    advertismentImages: [],
+    advertisementImages: [],
     location: "",
     categoryId: null,
     userId: "",
@@ -113,33 +113,31 @@ export const AdvertisementEdit = () => {
       .matches(phoneRegExp, "Phone number is not valid"),
   });
 
-  const handleSubmit = async (values: IAdvertismentEdit) => {
+  const handleSubmit = async (values: IAdvertisementEdit) => {
     try {
       await advertisementSchema.validate(values);
+
+      const formattedPrice = values.price.toString().replace(".", ",");
 
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("description", values.description);
-      formData.append("price", values.price.toString());
+      formData.append("price", formattedPrice);
       formData.append("contactPerson", values.contactPerson);
       formData.append("contactPhoneNumber", values.contactPhoneNumber);
-      values.advertismentImages.forEach((image) => {
-        formData.append("advertismentImages", image);
+      values.advertisementImages.forEach((image) => {
+        formData.append("advertisementImages", image);
       });
       formData.append("location", values.location);
       if (values.categoryId !== null)
         formData.append("categoryId", values.categoryId.toString());
       formData.append("userId", values.userId);
 
-      console.log(values);
-
-      await http_common.put(`api/Advertisments/${id}`, formData, {
+      await http_common.put(`api/Advertisements/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      console.log(values);
 
       navigate("../..");
     } catch (error) {
@@ -347,7 +345,7 @@ export const AdvertisementEdit = () => {
 
             <button
               onClick={() => {
-                setFieldValue("advertismentImages", images);
+                setFieldValue("advertisementImages", images);
               }}
               type="submit"
               className="btn btn-primary"

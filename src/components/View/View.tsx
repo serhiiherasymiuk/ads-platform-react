@@ -6,15 +6,15 @@ import http_common from "../../http_common";
 
 import { Link } from "react-router-dom";
 
-import { IAdvertisment } from "../../interfaces/advertisment";
+import { IAdvertisement } from "../../interfaces/advertisement";
 
 const View = () => {
   const { id } = useParams();
-  const [adv, setAdv] = useState<IAdvertisment>();
+  const [adv, setAdv] = useState<IAdvertisement>();
 
   useEffect(() => {
     http_common
-      .get(`api/Advertisments/${id}`)
+      .get(`api/Advertisements/${id}`)
       .then((resp) => {
         setAdv(resp.data);
         console.log(resp.data);

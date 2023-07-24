@@ -1,26 +1,27 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Main.scss";
-import { useEffect, useState } from "react";
-import { IAdvertisment } from "../../../interfaces/advertisment";
-import http_common from "../../../http_common";
-import { Search } from "../../Search/Search";
-import SearchSection from "../../Search/SearchSection";
+import { useState } from "react";
+import { SearchSection } from "../../Search/searchSection/SearchSection";
 
 export const Main = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [query, setQuery] = useState(location.state?.value);
-  const [value, setValue] = useState(location.state?.value);
+  const [value, setValue] = useState("");
 
   const handleChange = (e: any) => {
     setValue(e.target.value);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    navigate(`/search/${value}`);
   };
 
   return (
     <>
       <div className="main">
         <h1>What are you looking for?</h1>
-        <SearchSection />
+        <SearchSection></SearchSection>
         <div>
           <p>Recent searches</p>
         </div>

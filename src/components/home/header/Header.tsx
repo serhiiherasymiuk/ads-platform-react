@@ -6,6 +6,7 @@ export const Header = () => {
     <>
       <ul className="header-ul">
         <li>
+          <Link to={"/"}>Home</Link>
           <Link to={"/favorites"}>Favorites</Link>
           <Link to={"/items"}>Your items</Link>
           <Link to={"/messages"}>Messages</Link>

@@ -1,54 +1,91 @@
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./Search.scss";
 import { useEffect, useState } from "react";
-import Posts from "../Posts/Posts";
-import { IAdvertisment } from "../../interfaces/advertisment";
-import http_common from "../../http_common";
-import SearchSection from "./SearchSection";
-
 import { Header } from "../home/header/Header";
-import { replace } from "formik";
+import { SearchSection } from "./searchSection/SearchSection";
+import { ProfileContainer } from "../home/profileContainer/ProfileContainer";
+import { IAdvertisement } from "../../interfaces/advertisement";
+import http_common from "../../http_common";
 
 export const Search = () => {
-  const [posts, setPosts] = useState<IAdvertisment[]>([]);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [value,setValue] = useState(location.state);
-  const [post, setPost] = useState(posts);
+  const { value, category } = useParams();
 
+  const [advertisements, setAdvertisements] = useState<IAdvertisement[]>([]);
 
-  // location?.state?.value
   useEffect(() => {
-    http_common
-      .get<IAdvertisment[]>(`api/Advertisments`)
-      .then((resp) => {
-        console.log("Advertisments", resp.data);
-        setPosts(resp.data);
-        setPost(resp.data);
-        
-      }).then(()=>handleSearchClick(false))
-    },);
+    if (value) {
+      if (category) {
+        http_common
+          .get(`api/Advertisements/SearchByCategory/${value}/${category}`)
+          .then((resp) => {
+            setAdvertisements(resp.data);
+          });
+      } else {
+        http_common.get(`api/Advertisements/Search/${value}`).then((resp) => {
+          setAdvertisements(resp.data);
+        });
+      }
+    } else if (category) {
+      http_common
+        .get(`api/Advertisements/getByCategoryName/${category}`)
+        .then((resp) => {
+          setAdvertisements(resp.data);
+        });
+    } else {
+      http_common.get(`api/Advertisements`).then((resp) => {
+        setAdvertisements(resp.data);
+      });
+    }
+  }, [value, category]);
 
-  const handleSearchClick = (isF:boolean) =>{
-    if (value === ''||value===null) { setPost(posts); return; }
-    const filterBySearch = posts.filter((item) => {
-        if (item.name.toLowerCase()
-            .includes(value?.toLowerCase())) { return item; }
-    })
-    setPost(filterBySearch);
-   
-  if(isF){navigate(`/search/${value}`,{state:value,replace:true});}
-   
-  }
- 
+  const formatDate = (date: Date) => {
+    console.log(date);
+    const options: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    };
+    return new Date(date).toLocaleString("en-US", options);
+  };
+
   return (
     <>
-      <Header/>
-      <SearchSection></SearchSection>
-      <div className="container">
-        {post.map((post,index)=>( <Posts post={post} key={index} /> ) )}
+      <div className="search">
+        <div>
+          <Header></Header>
+          <ProfileContainer></ProfileContainer>
+        </div>
+        <SearchSection></SearchSection>
+        <div className="advertisements">
+          {advertisements.map((c: IAdvertisement) => {
+            return (
+              <div key={c.id}>
+                <img
+                  src={`https://adsplatformstorage.blob.core.windows.net/advertisement-images/${c.advertisementImages[0].image}`}
+                  alt=""
+                />
+                <div>
+                  <div>
+                    <p className="advertisement-title">{c.name}</p>
+                    <div className="advertisement-price">
+                      <i className="bi bi-truck"></i>
+                      <div>
+                        <p>{c.price}</p>
+                        <i className="bi bi-currency-dollar"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <p>
+                      {c.location} {formatDate(c.creationDate)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-
     </>
   );
 };

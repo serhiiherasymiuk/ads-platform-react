@@ -102,7 +102,7 @@ export const Register = () => {
             roles: user.roles,
           },
         });
-        navigate("/");
+        navigate(-1);
       });
     } catch (error) {
       console.error("Error during register: ", error);

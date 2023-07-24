@@ -4,19 +4,9 @@ import { useEffect, useState } from "react";
 import http_common from "../../../http_common";
 import { ICategory } from "../../../interfaces/category";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AuthUserActionType, IAuthUser } from "../../../interfaces/user";
-import { googleLogout } from "@react-oauth/google";
+import { ProfileContainer } from "../profileContainer/ProfileContainer";
 
 export const Categories = () => {
-  const dispatch = useDispatch();
-
-  const navigate = useNavigate();
-
-  const { user, isAuth, isGoogle } = useSelector(
-    (store: any) => store.auth as IAuthUser
-  );
-
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [allCategories, setAllCategories] = useState<ICategory[]>([]);
 
@@ -29,13 +19,6 @@ export const Categories = () => {
       setAllCategories(resp.data);
     });
   }, []);
-
-  const onLogoutHandler = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("access_token");
-    dispatch({ type: AuthUserActionType.LOGOUT_USER });
-    if (isGoogle) googleLogout();
-  };
 
   const [subcategories, setSubcategories] = useState<{
     [parentId: number]: ICategory[];
@@ -71,19 +54,21 @@ export const Categories = () => {
       return (
         <ul>
           <i className="bi bi-caret-right-fill category-icon"></i>
+
           {subcategories[id].map((subcategory: ICategory) => (
-            <li
-              key={subcategory.id}
-              onMouseEnter={() => handleSubcategoryMouseEnter(subcategory.id)}
-              onMouseLeave={() => handleSubcategoryMouseLeave(subcategory.id)}
-            >
-              <img
-                src={`https://adsplatformstorage.blob.core.windows.net/category-images/${subcategory.image}`}
-                alt={subcategory.name}
-              />
-              <p>{subcategory.name}</p>
-              <div>{renderSubcategories(subcategory.id)}</div>
-            </li>
+            <Link key={subcategory.id} to={`/${subcategory.name}`}>
+              <li
+                onMouseEnter={() => handleSubcategoryMouseEnter(subcategory.id)}
+                onMouseLeave={() => handleSubcategoryMouseLeave(subcategory.id)}
+              >
+                <img
+                  src={`https://adsplatformstorage.blob.core.windows.net/category-images/${subcategory.image}`}
+                  alt={subcategory.name}
+                />
+                <p>{subcategory.name}</p>
+                <div>{renderSubcategories(subcategory.id)}</div>
+              </li>
+            </Link>
           ))}
         </ul>
       );
@@ -93,51 +78,28 @@ export const Categories = () => {
 
   return (
     <>
-      {isAuth ? (
-        <div className="profile-container">
-          <button onClick={onLogoutHandler}>Logout</button>
-          <Link className="nav-link" to="/profile">
-            {isGoogle ? (
-              <img src={user?.profilePicture} alt="" />
-            ) : user?.profilePicture ? (
-              <img
-                src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
-                alt=""
-              />
-            ) : (
-              <i className="bi bi-person-circle"></i>
-            )}
-          </Link>
-        </div>
-      ) : (
-        <div className="links-container">
-          <Link to="/login">
-            <button>Login</button>
-          </Link>
-          <Link to="/register">
-            <button>Register</button>
-          </Link>
-        </div>
-      )}
+      <ProfileContainer></ProfileContainer>
       <div className="category-container">
         {categories.map((c: ICategory) => {
           return (
             <React.Fragment key={c.id}>
-              <div
-                onMouseEnter={() => handleSubcategoryMouseEnter(c.id)}
-                onMouseLeave={() => handleSubcategoryMouseLeave(c.id)}
-              >
-                <img
-                  src={`https://adsplatformstorage.blob.core.windows.net/category-images/${c.image}`}
-                  alt={c.name}
-                />
-                <p>{c.name}</p>
-                {hoveredCategories.find((x) => x === c.id) && (
-                  <div className="categories active">
-                    {renderSubcategories(c.id)}
-                  </div>
-                )}
-              </div>
+              <Link key={c.id} to={`/${c.name}`}>
+                <div
+                  onMouseEnter={() => handleSubcategoryMouseEnter(c.id)}
+                  onMouseLeave={() => handleSubcategoryMouseLeave(c.id)}
+                >
+                  <img
+                    src={`https://adsplatformstorage.blob.core.windows.net/category-images/${c.image}`}
+                    alt={c.name}
+                  />
+                  <p>{c.name}</p>
+                  {hoveredCategories.find((x) => x === c.id) && (
+                    <div className="categories active">
+                      {renderSubcategories(c.id)}
+                    </div>
+                  )}
+                </div>
+              </Link>
             </React.Fragment>
           );
         })}

@@ -1,41 +1,42 @@
-export interface IAdvertismentImage {
+export interface IAdvertisementImage {
   id: number;
   image: string;
-  advertismentId: number;
+  advertisementId: number;
 }
 
-export interface IAdvertisment {
+export interface IAdvertisement {
   id: number;
   name: string;
   description: string;
   price: number;
   contactPerson: string;
   contactPhoneNumber: string;
-  advertismentImages: IAdvertismentImage[];
+  advertisementImages: IAdvertisementImage[];
   location: string;
   categoryId: number;
+  creationDate: Date;
   userId: string;
 }
 
-export interface IAdvertismentCreate {
+export interface IAdvertisementCreate {
   name: string;
   description: string;
   price: number;
   contactPerson: string;
   contactPhoneNumber: string;
-  advertismentImages: File[];
+  advertisementImages: File[];
   location: string;
   categoryId: number | null;
   userId: string;
 }
 
-export interface IAdvertismentEdit {
+export interface IAdvertisementEdit {
   name: string;
   description: string;
   price: number;
   contactPerson: string;
   contactPhoneNumber: string;
-  advertismentImages: File[];
+  advertisementImages: File[];
   location: string;
   categoryId: number | null;
   userId: string;

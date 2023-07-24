@@ -70,7 +70,7 @@ export const Login = () => {
           roles: user.roles,
         },
       });
-      navigate("/");
+      navigate(-1);
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -104,7 +104,7 @@ export const Login = () => {
               },
             });
           }
-          navigate("/");
+          navigate(-1);
         })
         .catch((err) => console.log(err));
     },

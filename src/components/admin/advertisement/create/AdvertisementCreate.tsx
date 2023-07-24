@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "./AdvertisementCreate.scss";
 import { ICategory } from "../../../../interfaces/category";
 import * as Yup from "yup";
-import { IAdvertismentCreate } from "../../../../interfaces/advertisment";
+import { IAdvertisementCreate } from "../../../../interfaces/advertisement";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { IAuthUser } from "../../../../interfaces/user";
 
@@ -17,13 +17,13 @@ export const AdvertisementCreate = () => {
     (state: RootState) => state.category.categories
   );
 
-  const initialValues: IAdvertismentCreate = {
+  const initialValues: IAdvertisementCreate = {
     name: "",
     description: "",
     price: 0,
     contactPerson: "",
     contactPhoneNumber: "",
-    advertismentImages: [],
+    advertisementImages: [],
     location: "",
     categoryId: null,
     userId: "",
@@ -61,27 +61,29 @@ export const AdvertisementCreate = () => {
       .matches(phoneRegExp, "Phone number is not valid"),
   });
 
-  const handleSubmit = async (values: IAdvertismentCreate) => {
+  const handleSubmit = async (values: IAdvertisementCreate) => {
     try {
       if (user?.id !== undefined) values.userId = user?.id;
 
       await advertisementSchema.validate(values);
 
+      const formattedPrice = values.price.toString().replace(".", ",");
+
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("description", values.description);
-      formData.append("price", values.price.toString());
+      formData.append("price", formattedPrice);
       formData.append("contactPerson", values.contactPerson);
       formData.append("contactPhoneNumber", values.contactPhoneNumber);
-      values.advertismentImages.forEach((image) => {
-        formData.append("advertismentImages", image);
+      values.advertisementImages.forEach((image) => {
+        formData.append("advertisementImages", image);
       });
       formData.append("location", values.location);
       if (values.categoryId !== null)
         formData.append("categoryId", values.categoryId.toString());
       formData.append("userId", values.userId);
 
-      await http_common.post("api/Advertisments", formData, {
+      await http_common.post("api/Advertisements", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -89,7 +91,7 @@ export const AdvertisementCreate = () => {
 
       navigate("..");
     } catch (error) {
-      console.error("Error adding category:", error);
+      console.error("Error adding advertisement:", error);
     }
   };
 
@@ -287,7 +289,7 @@ export const AdvertisementCreate = () => {
 
             <button
               onClick={() => {
-                setFieldValue("advertismentImages", images);
+                setFieldValue("advertisementImages", images);
               }}
               type="submit"
               className="btn btn-primary"

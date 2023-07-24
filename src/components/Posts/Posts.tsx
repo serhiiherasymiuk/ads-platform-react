@@ -3,7 +3,7 @@ import Heart from "../assets/Heart";
 import "./Post.css";
 import { Link, Route } from "react-router-dom";
 import axios from "axios";
-import { IAdvertisment } from "../../interfaces/advertisment";
+import { IAdvertisement } from "../../interfaces/advertisement";
 import http_common from "../../http_common";
 
 function Posts({ post }: { post: any }) {

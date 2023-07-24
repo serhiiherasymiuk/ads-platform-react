@@ -23,7 +23,7 @@ export const CategoryList = () => {
 
   return (
     <>
-      <div className="categories">
+      <div className="categories-admin">
         <Link to={"create"}>
           <button type="button" className="btn btn-dark">
             Create

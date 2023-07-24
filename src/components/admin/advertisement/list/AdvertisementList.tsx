@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
+import { useDispatch } from "react-redux";
 import http_common from "../../../../http_common";
 import { Link } from "react-router-dom";
 import "./AdvertisementList.scss";
-import { ICategory } from "../../../../interfaces/category";
 import { setCategories } from "../../../../redux/reducers/CategoryReducer";
 import {
-  IAdvertisment,
-  IAdvertismentImage,
-} from "../../../../interfaces/advertisment";
+  IAdvertisement,
+  IAdvertisementImage,
+} from "../../../../interfaces/advertisement";
 import { ModalAdvertisementsDelete } from "../../../../common/ModalAdvertisementDelete";
 
 export const AdvertisementList = () => {
   const dispatch = useDispatch();
 
-  const [advertisements, setAdvertisements] = useState<IAdvertisment[]>([]);
+  const [advertisements, setAdvertisements] = useState<IAdvertisement[]>([]);
 
   useEffect(() => {
-    http_common.get("api/Advertisments").then((resp) => {
+    http_common.get("api/Advertisements").then((resp) => {
       setAdvertisements(resp.data);
     });
     http_common.get("api/Categories").then((resp) => {
@@ -28,7 +26,7 @@ export const AdvertisementList = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await http_common.delete(`api/Advertisments/${id}`);
+      await http_common.delete(`api/Advertisements/${id}`);
       setAdvertisements(advertisements.filter((a) => a.id !== id));
     } catch (error) {
       console.error("Error deleting advertisement:", error);
@@ -37,7 +35,7 @@ export const AdvertisementList = () => {
 
   return (
     <>
-      <div className="advertisements">
+      <div className="advertisements-admin">
         <Link to={"create"}>
           <button type="button" className="btn btn-dark">
             Create
@@ -58,7 +56,7 @@ export const AdvertisementList = () => {
             </tr>
           </thead>
           <tbody>
-            {advertisements.map((a: IAdvertisment) => {
+            {advertisements.map((a: IAdvertisement) => {
               return (
                 <React.Fragment key={a.id}>
                   <tr>
@@ -69,11 +67,11 @@ export const AdvertisementList = () => {
                     <td>{a.contactPerson}</td>
                     <td>{a.contactPhoneNumber}</td>
                     <td className="advertisement-images">
-                      {a.advertismentImages.map((i: IAdvertismentImage) => {
+                      {a.advertisementImages.map((i: IAdvertisementImage) => {
                         return (
                           <React.Fragment key={i.id}>
                             <img
-                              src={`https://adsplatformstorage.blob.core.windows.net/advertisment-images/${i.image}`}
+                              src={`https://adsplatformstorage.blob.core.windows.net/advertisement-images/${i.image}`}
                               alt=""
                             />
                           </React.Fragment>
