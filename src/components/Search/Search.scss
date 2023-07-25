@@ -1,5 +1,8 @@
 .search {
   padding: 0 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
   > div {
     display: flex;
     justify-content: space-between;
@@ -28,9 +31,10 @@
 }
 
 .advertisements {
+  padding-top: 38px;
   display: flex;
   gap: 30px;
-  padding-top: 30px;
+  flex-direction: column;
   .advertisement-title {
     font-size: 26px;
   }
@@ -43,6 +47,9 @@
     div {
       gap: 0;
     }
+  }
+  > div:last-child {
+    margin-bottom: 30px;
   }
   > div {
     cursor: pointer;
@@ -72,5 +79,49 @@
         gap: 30px;
       }
     }
+  }
+}
+
+.select {
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  > p:first-child {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+  }
+  > p:first-child:hover {
+    background-color: #f2f4f5;
+  }
+  p {
+    margin: 0;
+    background-color: #f2f4f5;
+    padding: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  p:hover {
+    background-color: #13ebdd;
+  }
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  .subcategory {
+    margin-left: 200px;
+    margin-top: -44px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.open {
+  > p:first-child {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px 10px 0 0;
   }
 }
