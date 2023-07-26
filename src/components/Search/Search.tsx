@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Search.scss";
 import { useEffect, useRef, useState } from "react";
 import { Header } from "../home/header/Header";
@@ -18,6 +18,8 @@ export const Search = () => {
   const [allCategories, setAllCategories] = useState<ICategory[]>([]);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const [selectMessage, setSelectMessage] = useState<string>();
 
   const selectRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +47,14 @@ export const Search = () => {
         setAdvertisements(resp.data);
       });
     }
+
+    if (category) setSelectMessage(category);
+    else setSelectMessage("Select a category");
+
     fetchCategories();
+
+    setIsDropdownOpen(false);
+    setHoveredCategories([]);
 
     const handleDocumentClick = (event: MouseEvent) => {
       if (
@@ -64,25 +73,41 @@ export const Search = () => {
   }, [value, category]);
 
   const fetchCategories = () => {
-    if (headCategories) {
-      http_common
-        .get(`api/Categories/getByParentName/${category}`)
-        .then((resp) => {
-          setHeadCategories(resp.data);
-        });
-    }
     http_common.get("api/Categories").then((resp) => {
       setAllCategories(resp.data);
     });
+    http_common
+      .get(`api/Categories/getByParentName/${category}`)
+      .then((resp) => {
+        if (resp.data.length === 0) {
+          http_common.get("api/Categories/getHead").then((resp) => {
+            setHeadCategories(resp.data);
+          });
+        } else setHeadCategories(resp.data);
+      });
   };
 
   const formatDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    };
-    return new Date(date).toLocaleString("en-US", options);
+    const utcDate = new Date(date);
+    const day = utcDate.getUTCDate().toString().padStart(2, "0");
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const month = monthNames[utcDate.getUTCMonth()];
+    const year = utcDate.getUTCFullYear();
+    const formattedDate = `${day} ${month} ${year}`;
+    return formattedDate;
   };
 
   const [subcategories, setSubcategories] = useState<{
@@ -107,6 +132,13 @@ export const Search = () => {
     );
   };
 
+  const navigate = useNavigate();
+
+  const handleSubcategoryClick = (name: string) => {
+    if (value) navigate(`/${name}/${value}`);
+    else navigate(`/${name}`);
+  };
+
   const fetchSubcategories = (id: number) => {
     setSubcategories((prevSubcategories) => ({
       ...prevSubcategories,
@@ -124,14 +156,12 @@ export const Search = () => {
               onMouseEnter={() => handleSubcategoryMouseEnter(subcategory.id)}
               onMouseLeave={() => handleSubcategoryMouseLeave(subcategory.id)}
             >
-              <Link to={`/${subcategory.name}`}>
-                <p>
-                  {subcategory.name}
-                  {allCategories.some((c) => c.parentId === subcategory.id) ? (
-                    <i className="bi bi-caret-right-fill"></i>
-                  ) : null}
-                </p>
-              </Link>
+              <p onClick={() => handleSubcategoryClick(subcategory.name)}>
+                {subcategory.name}
+                {allCategories.some((c) => c.parentId === subcategory.id) ? (
+                  <i className="bi bi-caret-right-fill"></i>
+                ) : null}
+              </p>
               {renderSubcategories(subcategory.id)}
             </div>
           ))}
@@ -155,17 +185,13 @@ export const Search = () => {
             className={`select ${isDropdownOpen ? "open" : ""}`}
           >
             <p onClick={() => setIsDropdownOpen((prevState) => !prevState)}>
-              Select a subcategory
+              {selectMessage}
               <i className="bi bi-caret-down-fill"></i>
             </p>
             {isDropdownOpen &&
               headCategories.map((category: ICategory) => {
                 return (
                   <div
-                    onClick={() => {
-                      setIsDropdownOpen((prevState) => !prevState);
-                      setHoveredCategories([]);
-                    }}
                     key={category.id}
                     onMouseEnter={() =>
                       handleSubcategoryMouseEnter(category.id)
@@ -174,16 +200,12 @@ export const Search = () => {
                       handleSubcategoryMouseLeave(category.id)
                     }
                   >
-                    <Link to={`/${category.name}`}>
-                      <p>
-                        {category.name}
-                        {allCategories.some(
-                          (c) => c.parentId === category.id
-                        ) ? (
-                          <i className="bi bi-caret-right-fill"></i>
-                        ) : null}
-                      </p>
-                    </Link>
+                    <p onClick={() => handleSubcategoryClick(category.name)}>
+                      {category.name}
+                      {allCategories.some((c) => c.parentId === category.id) ? (
+                        <i className="bi bi-caret-right-fill"></i>
+                      ) : null}
+                    </p>
                     {renderSubcategories(category.id)}
                   </div>
                 );
@@ -193,7 +215,10 @@ export const Search = () => {
         <div className="advertisements">
           {advertisements.map((c: IAdvertisement) => {
             return (
-              <div key={c.id}>
+              <div
+                key={c.id}
+                onClick={() => navigate(`/advertisement/${c.id}`)}
+              >
                 <img
                   src={`https://adsplatformstorage.blob.core.windows.net/advertisement-images/${c.advertisementImages[0].image}`}
                   alt=""

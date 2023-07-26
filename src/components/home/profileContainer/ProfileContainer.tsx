@@ -23,7 +23,7 @@ export const ProfileContainer = () => {
       {isAuth ? (
         <div className="profile-container">
           <button onClick={onLogoutHandler}>Logout</button>
-          <Link className="nav-link" to="/profile">
+          <Link className="nav-link" to={`/profile/${user?.userName}`}>
             {isGoogle ? (
               <img src={user?.profilePicture} alt="" />
             ) : user?.profilePicture ? (

@@ -10,6 +10,7 @@ export const SearchSection = () => {
 
   useEffect(() => {
     if (value) setQuery(value);
+    else setQuery("");
   }, [value]);
 
   const handleSubmit = (values: any) => {

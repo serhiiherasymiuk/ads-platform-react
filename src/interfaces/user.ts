@@ -9,7 +9,7 @@ export interface IUser {
   userName: string;
   email: string;
   profilePicture: string;
-  registrationDate: string;
+  registrationDate: Date;
   phoneNumber: string;
   roles: string[];
 }

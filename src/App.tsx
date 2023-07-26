@@ -19,6 +19,7 @@ import { AdvertisementList } from "./components/admin/advertisement/list/Adverti
 import { AdvertisementCreate } from "./components/admin/advertisement/create/AdvertisementCreate";
 import { AdvertisementEdit } from "./components/admin/advertisement/edit/AdvertisementEdit";
 import { Search } from "./components/Search/Search";
+import { Advertisement } from "./components/advertisement/Advertisement";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
@@ -36,39 +37,36 @@ function App() {
         <Route path="search/" element={<Search />} />
         <Route path=":category/:value" element={<Search />} />
         <Route path=":category/" element={<Search />} />
+        <Route path="/advertisement/:id" element={<Advertisement />} />
 
-        {isAuth ? (
-          <Route path={"/profile"} element={<ProfileLayout />}>
-            <Route index element={<Profile />} />
-            {!isGoogle ? (
-              <Route path="edit" element={<ProfileEdit />} />
-            ) : (
-              <Route path="edit" element={<Profile />} />
-            )}
-            {user?.roles.includes("admin") ? (
-              <Route path={"admin"} element={<AdminLayout />}>
-                <Route path="category">
-                  <Route index element={<CategoryList />} />
-                  <Route path="create" element={<CategoryCreate />} />
-                  <Route path="edit">
-                    <Route path=":id" element={<CategoryEdit />} />
-                  </Route>
-                </Route>
-                <Route path="advertisement">
-                  <Route index element={<AdvertisementList />} />
-                  <Route path="create" element={<AdvertisementCreate />} />
-                  <Route path="edit">
-                    <Route path=":id" element={<AdvertisementEdit />} />
-                  </Route>
+        <Route path={"/profile/:username"} element={<ProfileLayout />}>
+          <Route index element={<Profile />} />
+          {isAuth ? (
+            <Route path="edit" element={<ProfileEdit />} />
+          ) : (
+            <Route path="edit" element={<Login />} />
+          )}
+          {user?.roles.includes("admin") ? (
+            <Route path={"admin"} element={<AdminLayout />}>
+              <Route path="category">
+                <Route index element={<CategoryList />} />
+                <Route path="create" element={<CategoryCreate />} />
+                <Route path="edit">
+                  <Route path=":id" element={<CategoryEdit />} />
                 </Route>
               </Route>
-            ) : (
-              <Route path="admin" element={<Profile />} />
-            )}
-          </Route>
-        ) : (
-          <Route path="/profile" element={<Login />} />
-        )}
+              <Route path="advertisement">
+                <Route index element={<AdvertisementList />} />
+                <Route path="create" element={<AdvertisementCreate />} />
+                <Route path="edit">
+                  <Route path=":id" element={<AdvertisementEdit />} />
+                </Route>
+              </Route>
+            </Route>
+          ) : (
+            <Route path="admin" element={<Profile />} />
+          )}
+        </Route>
       </Routes>
     </>
   );

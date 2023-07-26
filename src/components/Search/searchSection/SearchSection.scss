@@ -2,10 +2,10 @@
   display: grid;
   grid-template-columns: 1fr 10fr 3fr;
   align-items: center;
+  border: 1px solid #b9bec4;
   input {
     background-color: #f2f4f5;
-    border: 1px solid #e7e9eb;
-    border-left: 0;
+    border: 0;
     padding: 30px;
   }
   input:focus {
