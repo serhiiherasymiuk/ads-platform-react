@@ -20,6 +20,7 @@ import { AdvertisementCreate } from "./components/admin/advertisement/create/Adv
 import { AdvertisementEdit } from "./components/admin/advertisement/edit/AdvertisementEdit";
 import { Search } from "./components/Search/Search";
 import { Advertisement } from "./components/advertisement/Advertisement";
+import { Create } from "./components/create/Create";
 
 function App() {
   const { user, isAuth, isGoogle } = useSelector(
@@ -38,6 +39,11 @@ function App() {
         <Route path=":category/:value" element={<Search />} />
         <Route path=":category/" element={<Search />} />
         <Route path="/advertisement/:id" element={<Advertisement />} />
+        {isAuth ? (
+          <Route path="/create" element={<Create />} />
+        ) : (
+          <Route path="/create" element={<Login />} />
+        )}
 
         <Route path={"/profile/:username"} element={<ProfileLayout />}>
           <Route index element={<Profile />} />

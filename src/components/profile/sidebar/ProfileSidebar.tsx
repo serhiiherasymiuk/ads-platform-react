@@ -40,20 +40,19 @@ export const ProfileSidebar = () => {
           <i className="bi bi-person"></i>
           Profile
         </Link>
-        {(!isAuth && user?.id === owner?.id) ??
-          (!isGoogle && (
-            <Link
-              className={
-                location.pathname === `/profile/${user?.userName}/edit`
-                  ? "active"
-                  : ""
-              }
-              to="edit"
-            >
-              <i className="bi bi-pencil"></i>
-              Edit
-            </Link>
-          ))}
+        {isAuth && user?.id === owner?.id && !isGoogle && (
+          <Link
+            className={
+              location.pathname === `/profile/${user?.userName}/edit`
+                ? "active"
+                : ""
+            }
+            to="edit"
+          >
+            <i className="bi bi-pencil"></i>
+            Edit
+          </Link>
+        )}
         {user?.roles.includes("admin") && (
           <Link
             className={location.pathname.includes("/admin") ? "active" : ""}

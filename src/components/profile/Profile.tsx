@@ -43,7 +43,7 @@ export const Profile = () => {
             )}
             <h2>{owner?.userName}</h2>
           </div>
-          {(!isAuth && user?.id === owner?.id) ?? (
+          {isAuth && user?.id === owner?.id && (
             <Link to="edit">
               <button>
                 Edit <i className="bi bi-pencil"></i>
@@ -54,7 +54,7 @@ export const Profile = () => {
         <div className="personal-info">
           <div>
             <h3>Personal Information</h3>
-            {(!isAuth && user?.id === owner?.id) ?? (
+            {isAuth && user?.id === owner?.id && (
               <Link to="edit">
                 <button>
                   Edit <i className="bi bi-pencil"></i>
