@@ -147,16 +147,21 @@ export const AdvertisementDetails = () => {
           </div>
           <div>
             <div onClick={() => navigate(`/profile/${user?.userName}`)}>
-              <img
-                src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
-              />
+              {user?.profilePicture ? (
+                <img
+                  src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
+                  alt=""
+                />
+              ) : (
+                <i className="bi bi-person-circle"></i>
+              )}
               <div className="user-contact">
                 <p>{advertisement?.contactPerson}</p>
                 <p>On AdsPlatform since {formattedRegistrationDate}</p>
               </div>
             </div>
             <div>
-              <i className="bi bi-telephone"></i>
+              <i className="bi bi-telephone call-icon"></i>
               <p>{advertisement?.contactPhoneNumber}</p>
             </div>
           </div>

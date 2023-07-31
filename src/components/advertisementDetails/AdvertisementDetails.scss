@@ -82,6 +82,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      width: 100%;
     }
     h3 {
       font-weight: 400;
@@ -145,10 +146,10 @@
         p {
           font-size: 22px;
         }
-        i {
-          font-size: 22px;
-        }
       }
+    }
+    .call-icon {
+      font-size: 22px;
     }
     h3 {
       font-weight: 400;
@@ -158,6 +159,9 @@
       width: 75px;
       border-radius: 50%;
       cursor: pointer;
+    }
+    i {
+      font-size: 75px;
     }
     margin-bottom: 30px;
   }
