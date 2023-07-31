@@ -3,14 +3,14 @@ import "./Create.scss";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import http_common from "../../http_common";
-import { IAdvertisementCreate } from "../../interfaces/advertisement";
-import { ICategory } from "../../interfaces/category";
-import { IAuthUser } from "../../interfaces/user";
-import { RootState } from "../../redux/store";
+import http_common from "../../../http_common";
+import { IAdvertisementCreate } from "../../../interfaces/advertisement";
+import { ICategory } from "../../../interfaces/category";
+import { IAuthUser } from "../../../interfaces/user";
+import { RootState } from "../../../redux/store";
 import * as Yup from "yup";
-import { Header } from "../home/header/Header";
-import { ProfileContainer } from "../home/profileContainer/ProfileContainer";
+import { Header } from "../../home/header/Header";
+import { ProfileContainer } from "../../home/profileContainer/ProfileContainer";
 
 export const Create = () => {
   const { user } = useSelector((store: any) => store.auth as IAuthUser);

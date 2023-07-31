@@ -22,7 +22,7 @@ export const ProfileSidebar = () => {
     http_common.get(`api/Users/getByUserName/${username}`).then((resp) => {
       setOwner(resp.data);
     });
-  });
+  }, [username]);
 
   return (
     <>

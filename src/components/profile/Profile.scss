@@ -8,7 +8,8 @@
     width: 100px;
     border-radius: 50%;
   }
-  > div {
+  > div:nth-child(2),
+  .personal-info {
     border: 1px solid #b9bec4;
     border-radius: 15px;
     padding: 10px 20px;
@@ -43,20 +44,26 @@
       color: #00d7c9;
     }
   }
-}
-
-.personal-info {
-  display: flex;
-  flex-direction: column;
-  > div {
-    width: 100%;
+  .personal-info {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     > div {
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
+      justify-content: space-between;
+      > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+      }
+    }
+  }
+  .advertisements {
+    border: 0;
+    padding: 0;
+    > div:last-child {
+      margin: 0;
     }
   }
 }

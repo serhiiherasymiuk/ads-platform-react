@@ -1,9 +1,9 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import http_common from "../../http_common";
 import { SearchSection } from "../Search/searchSection/SearchSection";
 import { Header } from "../home/header/Header";
 import { ProfileContainer } from "../home/profileContainer/ProfileContainer";
-import "./Advertisement.scss";
+import "./AdvertisementDetails.scss";
 import { useEffect, useState } from "react";
 import {
   IAdvertisement,
@@ -11,7 +11,7 @@ import {
 } from "../../interfaces/advertisement";
 import { IUser } from "../../interfaces/user";
 
-export const Advertisement = () => {
+export const AdvertisementDetails = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ export const Advertisement = () => {
 
   return (
     <>
-      <div className="advertisement">
+      <div className="advertisementDetails">
         <div>
           <Header></Header>
           <ProfileContainer></ProfileContainer>
@@ -144,7 +144,6 @@ export const Advertisement = () => {
         <div className="user-info">
           <div>
             <h3>Connect with seller</h3>
-            <button>Message</button>
           </div>
           <div>
             <div onClick={() => navigate(`/profile/${user?.userName}`)}>

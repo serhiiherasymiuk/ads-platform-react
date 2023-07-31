@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { FC, useState } from "react";

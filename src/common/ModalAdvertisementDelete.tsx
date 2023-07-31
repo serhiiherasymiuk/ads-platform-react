@@ -1,9 +1,6 @@
-import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { FC, useState } from "react";
-import http_common from "../http_common";
-import { deleteCategory } from "../redux/reducers/CategoryReducer";
 
 interface Props {
   id: number;

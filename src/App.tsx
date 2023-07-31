@@ -1,10 +1,8 @@
 import "./App.css";
-import logo from "./logo.svg";
 import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IAuthUser } from "./interfaces/user";
 import { Login } from "./components/auth/login/Login";
-import { List } from "reactstrap";
 import View from "./components/View/View";
 import { Register } from "./components/auth/register/Register";
 import { Homepage } from "./components/home/Homepage";
@@ -19,13 +17,11 @@ import { AdvertisementList } from "./components/admin/advertisement/list/Adverti
 import { AdvertisementCreate } from "./components/admin/advertisement/create/AdvertisementCreate";
 import { AdvertisementEdit } from "./components/admin/advertisement/edit/AdvertisementEdit";
 import { Search } from "./components/Search/Search";
-import { Advertisement } from "./components/advertisement/Advertisement";
-import { Create } from "./components/create/Create";
+import { Create } from "./components/advertisementDetails/create/Create";
+import { AdvertisementDetails } from "./components/advertisementDetails/AdvertisementDetails";
 
 function App() {
-  const { user, isAuth, isGoogle } = useSelector(
-    (store: any) => store.auth as IAuthUser
-  );
+  const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
 
   return (
     <>
@@ -38,13 +34,12 @@ function App() {
         <Route path="search/" element={<Search />} />
         <Route path=":category/:value" element={<Search />} />
         <Route path=":category/" element={<Search />} />
-        <Route path="/advertisement/:id" element={<Advertisement />} />
+        <Route path="/advertisement/:id" element={<AdvertisementDetails />} />
         {isAuth ? (
           <Route path="/create" element={<Create />} />
         ) : (
           <Route path="/create" element={<Login />} />
         )}
-
         <Route path={"/profile/:username"} element={<ProfileLayout />}>
           <Route index element={<Profile />} />
           {isAuth ? (
