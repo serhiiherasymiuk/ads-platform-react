@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 import { AuthReducer } from "./reducers/AuthReducer";
 import CategoryReducer from "./reducers/CategoryReducer";
+import { IsLoadingReducer } from "./reducers/IsLoadingReducer";
 
 const persistConfig = {
   key: "root",
@@ -21,6 +22,7 @@ export const store = configureStore({
   reducer: {
     auth: AuthReducer,
     category: persistedReducer,
+    loading: IsLoadingReducer,
   },
   middleware: [thunk],
 });

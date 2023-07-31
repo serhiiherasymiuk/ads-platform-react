@@ -19,12 +19,14 @@ import { AdvertisementEdit } from "./components/admin/advertisement/edit/Adverti
 import { Search } from "./components/Search/Search";
 import { Create } from "./components/advertisementDetails/create/Create";
 import { AdvertisementDetails } from "./components/advertisementDetails/AdvertisementDetails";
+import Notification from "./common/loader/Loader";
 
 function App() {
   const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
 
   return (
     <>
+      <Notification />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="login" element={<Login />} />
