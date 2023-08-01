@@ -101,7 +101,7 @@ export const ProfileEdit = () => {
 
   return (
     <>
-      <div className="edit">
+      <div className="profile-edit">
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -117,14 +117,10 @@ export const ProfileEdit = () => {
                   />
                 ) : (
                   <div>
-                    {user?.profilePicture ? (
-                      <img
+                    <img
                         src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
                         alt=""
-                      />
-                    ) : (
-                      <i className="bi bi-person-circle"></i>
-                    )}
+                    />
                   </div>
                 )}
               </div>

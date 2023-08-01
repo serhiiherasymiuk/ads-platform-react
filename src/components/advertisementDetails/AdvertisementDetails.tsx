@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import http_common from "../../http_common";
-import { SearchSection } from "../Search/searchSection/SearchSection";
+import { SearchSection } from "../search/searchSection/SearchSection";
 import { Header } from "../home/header/Header";
 import { ProfileContainer } from "../home/profileContainer/ProfileContainer";
 import "./AdvertisementDetails.scss";
@@ -147,14 +147,10 @@ export const AdvertisementDetails = () => {
           </div>
           <div>
             <div onClick={() => navigate(`/profile/${user?.userName}`)}>
-              {user?.profilePicture ? (
-                <img
+              <img
                   src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
                   alt=""
-                />
-              ) : (
-                <i className="bi bi-person-circle"></i>
-              )}
+              />
               <div className="user-contact">
                 <p>{advertisement?.contactPerson}</p>
                 <p>On AdsPlatform since {formattedRegistrationDate}</p>

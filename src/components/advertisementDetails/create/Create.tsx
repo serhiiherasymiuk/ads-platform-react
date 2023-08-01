@@ -102,7 +102,7 @@ export const Create = () => {
   return (
     <>
       <div className="create">
-        <div>
+        <div className="header">
           <Header></Header>
           <ProfileContainer></ProfileContainer>
         </div>

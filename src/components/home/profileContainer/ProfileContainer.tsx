@@ -26,14 +26,11 @@ export const ProfileContainer = () => {
           <Link className="nav-link" to={`/profile/${user?.userName}`}>
             {isGoogle ? (
               <img src={user?.profilePicture} alt="" />
-            ) : user?.profilePicture ? (
-              <img
+            ) :
+            <img
                 src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
                 alt=""
-              />
-            ) : (
-              <i className="bi bi-person-circle"></i>
-            )}
+            />}
           </Link>
         </div>
       ) : (

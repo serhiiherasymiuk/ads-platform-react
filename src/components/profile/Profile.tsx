@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Profile.scss";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IAuthUser, IUser } from "../../interfaces/user";
 import http_common from "../../http_common";
 import { useSelector } from "react-redux";
@@ -64,14 +64,10 @@ export const Profile = () => {
         )}
         <div>
           <div>
-            {owner?.profilePicture ? (
-              <img
+            <img
                 src={`https://adsplatformstorage.blob.core.windows.net/user-images/${owner?.profilePicture}`}
                 alt=""
-              />
-            ) : (
-              <i className="bi bi-person-circle"></i>
-            )}
+            />
             <h2>{owner?.userName}</h2>
           </div>
           {isAuth && user?.id === owner?.id && (
@@ -106,33 +102,42 @@ export const Profile = () => {
         </div>
         {advertisements.length > 0 && <h1>User Advertisements</h1>}
         <div className="advertisements">
-          {advertisements.map((c: IAdvertisement) => {
+          {advertisements.map((a: IAdvertisement) => {
             return (
               <div
-                key={c.id}
-                onClick={() => navigate(`/advertisement/${c.id}`)}
+                key={a.id}
+                onClick={() => navigate(`/advertisement/${a.id}`)}
               >
                 <img
-                  src={`https://adsplatformstorage.blob.core.windows.net/advertisement-images/${c.advertisementImages[0].image}`}
+                  src={`https://adsplatformstorage.blob.core.windows.net/advertisement-images/${a.advertisementImages[0].image}`}
                   alt=""
                 />
                 <div>
                   <div>
-                    <p className="advertisement-title">{c.name}</p>
+                    <p className="advertisement-title">{a.name}</p>
                     <div className="advertisement-price">
                       <i className="bi bi-truck"></i>
                       <div>
-                        <p>{c.price}</p>
+                        <p>{a.price}</p>
                         <i className="bi bi-currency-dollar"></i>
                       </div>
                     </div>
                   </div>
                   <div>
                     <p>
-                      {c.location} - {formatDate(c.creationDate)}
+                      {a.location} - {formatDate(a.creationDate)}
                     </p>
                   </div>
                 </div>
+                <Link
+                  to={`/edit/${a.id}`}
+                  className="btn btn-warning btn-sm edit-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <i className="bi bi-pencil"></i>
+                </Link>
               </div>
             );
           })}

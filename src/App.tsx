@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IAuthUser } from "./interfaces/user";
 import { Login } from "./components/auth/login/Login";
-import View from "./components/View/View";
 import { Register } from "./components/auth/register/Register";
 import { Homepage } from "./components/home/Homepage";
 import { Profile } from "./components/profile/Profile";
@@ -16,10 +15,11 @@ import { AdminLayout } from "./components/admin/layout/AdminLayout";
 import { AdvertisementList } from "./components/admin/advertisement/list/AdvertisementList";
 import { AdvertisementCreate } from "./components/admin/advertisement/create/AdvertisementCreate";
 import { AdvertisementEdit } from "./components/admin/advertisement/edit/AdvertisementEdit";
-import { Search } from "./components/Search/Search";
+import { Search } from "./components/search/Search";
 import { Create } from "./components/advertisementDetails/create/Create";
 import { AdvertisementDetails } from "./components/advertisementDetails/AdvertisementDetails";
 import Notification from "./common/loader/Loader";
+import {Edit} from "./components/advertisementDetails/edit/Edit";
 
 function App() {
   const { user, isAuth } = useSelector((store: any) => store.auth as IAuthUser);
@@ -31,16 +31,21 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="view-post/:id" element={<View />} />
         <Route path="search/:value" element={<Search />} />
         <Route path="search/" element={<Search />} />
         <Route path=":category/:value" element={<Search />} />
         <Route path=":category/" element={<Search />} />
         <Route path="/advertisement/:id" element={<AdvertisementDetails />} />
         {isAuth ? (
-          <Route path="/create" element={<Create />} />
+          <>
+            <Route path="/create" element={<Create />} />
+            <Route path="/edit/:id" element={<Edit />} />
+          </>
         ) : (
-          <Route path="/create" element={<Login />} />
+          <>
+            <Route path="/create" element={<Login />} />
+            <Route path="/edit/:id" element={<Login />} />
+          </>
         )}
         <Route path={"/profile/:username"} element={<ProfileLayout />}>
           <Route index element={<Profile />} />

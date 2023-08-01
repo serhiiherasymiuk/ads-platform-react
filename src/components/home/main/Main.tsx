@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Main.scss";
 import { useState } from "react";
-import { SearchSection } from "../../Search/searchSection/SearchSection";
+import { SearchSection } from "../../search/searchSection/SearchSection";
 
 export const Main = () => {
   return (

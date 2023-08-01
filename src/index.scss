@@ -65,6 +65,7 @@ code {
 .advertisements {
   padding-top: 43px;
   display: flex;
+  align-items: center;
   gap: 30px;
   flex-direction: column;
   .advertisement-title {
@@ -111,5 +112,36 @@ code {
         gap: 30px;
       }
     }
+  }
+  .edit-icon {
+    position: relative;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    margin-right: -25px;
+    margin-top: -25px;
+    z-index: 100;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  background-color: white;
+  border-bottom: 1px solid #b9bec4;
+  top: 0;
+  left: 120px;
+  right: 120px;
+  z-index: 10;
+  .profile-container {
+    padding: 0;
+  }
+  .header-ul {
+    width: 100%;
   }
 }

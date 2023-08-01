@@ -1,14 +1,21 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Search.scss";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Header } from "../home/header/Header";
-import { SearchSection } from "./searchSection/SearchSection";
 import { ProfileContainer } from "../home/profileContainer/ProfileContainer";
 import { IAdvertisement } from "../../interfaces/advertisement";
 import http_common from "../../http_common";
 import { ICategory } from "../../interfaces/category";
+import { SearchSection } from "./searchSection/SearchSection";
+import no_items_found from "../../assets/no_items_found.jpg"
+import {useSelector} from "react-redux";
+import {IAuthUser} from "../../interfaces/user";
 
 export const Search = () => {
+  const { user } = useSelector(
+      (store: any) => store.auth as IAuthUser
+  );
+
   const { value, category } = useParams();
 
   const [advertisements, setAdvertisements] = useState<IAdvertisement[]>([]);
@@ -213,36 +220,47 @@ export const Search = () => {
           </div>
         </div>
         <div className="advertisements">
-          {advertisements.map((c: IAdvertisement) => {
+          {advertisements.map((a: IAdvertisement) => {
             return (
               <div
-                key={c.id}
-                onClick={() => navigate(`/advertisement/${c.id}`)}
+                key={a.id}
+                onClick={() => navigate(`/advertisement/${a.id}`)}
               >
                 <img
-                  src={`https://adsplatformstorage.blob.core.windows.net/advertisement-images/${c.advertisementImages[0].image}`}
+                  src={`https://adsplatformstorage.blob.core.windows.net/advertisement-images/${a.advertisementImages[0].image}`}
                   alt=""
                 />
                 <div>
                   <div>
-                    <p className="advertisement-title">{c.name}</p>
+                    <p className="advertisement-title">{a.name}</p>
                     <div className="advertisement-price">
                       <i className="bi bi-truck"></i>
                       <div>
-                        <p>{c.price}</p>
+                        <p>{a.price}</p>
                         <i className="bi bi-currency-dollar"></i>
                       </div>
                     </div>
                   </div>
                   <div>
                     <p>
-                      {c.location} - {formatDate(c.creationDate)}
+                      {a.location} - {formatDate(a.creationDate)}
                     </p>
                   </div>
                 </div>
+                {user?.id === a.userId &&
+                  <Link
+                    to={`/edit/${a.id}`}
+                    className="btn btn-warning btn-sm edit-icon"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <i className="bi bi-pencil"></i>
+                  </Link>}
               </div>
             );
           })}
+          {advertisements.length === 0 && <img className="no-items-found-img" src={no_items_found} alt=""/>}
         </div>
       </div>
     </>

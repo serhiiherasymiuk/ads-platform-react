@@ -1,28 +1,5 @@
 .create {
   padding: 0 120px;
-  > div {
-    display: flex;
-    justify-content: space-between;
-  }
-  .profile-container {
-    padding: 0;
-  }
-  .links-container {
-    padding: 10px;
-    padding-right: 0;
-  }
-  .header-ul {
-    width: 100%;
-  }
-  > div:first-child {
-    position: fixed;
-    background-color: white;
-    border-bottom: 1px solid #b9bec4;
-    top: 0;
-    left: 120px;
-    right: 120px;
-    z-index: 100;
-  }
   .advertisement-create-form {
     margin-top: 100px;
     padding: 0;
