@@ -379,7 +379,6 @@ export const Edit = () => {
         ) : (
           <h1 className="advertismenet-not-exist">Advertisement does not exists</h1>
         )}
-
       </div>
     </>
   );

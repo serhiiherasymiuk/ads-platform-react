@@ -129,15 +129,16 @@ export const Profile = () => {
                     </p>
                   </div>
                 </div>
-                <Link
-                  to={`/edit/${a.id}`}
-                  className="btn btn-warning btn-sm edit-icon"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <i className="bi bi-pencil"></i>
-                </Link>
+                {user?.id === a.userId &&
+                  <Link
+                    to={`/edit/${a.id}`}
+                    className="btn btn-warning btn-sm edit-icon"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <i className="bi bi-pencil"></i>
+                  </Link>}
               </div>
             );
           })}
