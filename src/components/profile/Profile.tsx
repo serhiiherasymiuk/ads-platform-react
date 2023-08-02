@@ -21,12 +21,12 @@ export const Profile = () => {
   useEffect(() => {
     http_common.get(`api/Users/getByUserName/${username}`).then((resp) => {
       setOwner(resp.data);
+      http_common
+        .get(`api/Advertisements/getByUserId/${resp.data.id}`)
+        .then((resp) => {
+          setAdvertisements(resp.data);
+        });
     });
-    http_common
-      .get(`api/Advertisements/getByUserId/${owner?.id}`)
-      .then((resp) => {
-        setAdvertisements(resp.data);
-      });
   }, [owner?.id, username]);
 
   const formatDate = (date: Date) => {
