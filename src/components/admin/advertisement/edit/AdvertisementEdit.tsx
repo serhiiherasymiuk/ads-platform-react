@@ -14,13 +14,14 @@ import { Formik, Field, ErrorMessage, Form } from "formik";
 import axios from "axios";
 
 export const AdvertisementEdit = () => {
-  const categories = useSelector(
-    (state: RootState) => state.category.categories
-  );
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   const { id } = useParams();
 
   useEffect(() => {
+    http_common.get("api/Categories").then((resp) => {
+      setCategories(resp.data);
+    });
     http_common.get(`api/Advertisements/${id}`).then((resp) => {
       setInitialValues((prevValues) => ({
         ...prevValues,
@@ -37,7 +38,7 @@ export const AdvertisementEdit = () => {
 
       const imageUrls = resp.data.advertisementImages.map(
         (image: IAdvertisementImage) =>
-          `https://adsplatformstorage.blob.core.windows.net/advertisement-images/${image.image}`
+          `https://adsplatformstorage.blob.core.windows.net/advertisement-images/${image.image}`,
       );
 
       downloadAndConvertImages(imageUrls).then((files) => {
@@ -284,7 +285,7 @@ export const AdvertisementEdit = () => {
                     <i
                       onClick={() => {
                         setImages((prevImages) =>
-                          prevImages.filter((image) => image !== f)
+                          prevImages.filter((image) => image !== f),
                         );
                       }}
                       className="bi bi-x-circle-fill"

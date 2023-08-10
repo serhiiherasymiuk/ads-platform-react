@@ -12,10 +12,13 @@ import { IAuthUser } from "../../../../interfaces/user";
 
 export const AdvertisementCreate = () => {
   const { user } = useSelector((store: any) => store.auth as IAuthUser);
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
-  const categories = useSelector(
-    (state: RootState) => state.category.categories
-  );
+  useEffect(() => {
+    http_common.get("api/Categories").then((resp) => {
+      setCategories(resp.data);
+    });
+  }, []);
 
   const initialValues: IAdvertisementCreate = {
     name: "",
@@ -232,7 +235,7 @@ export const AdvertisementCreate = () => {
                     <i
                       onClick={() => {
                         setImages((prevImages) =>
-                          prevImages.filter((image) => image !== f)
+                          prevImages.filter((image) => image !== f),
                         );
                       }}
                       className="bi bi-x-circle-fill"

@@ -1,4 +1,4 @@
-.advertisementDetails {
+.advertisement-details {
   padding: 0 120px;
   display: flex;
   flex-direction: column;
@@ -7,36 +7,14 @@
     display: flex;
     justify-content: space-between;
   }
-  .profile-container {
-    padding: 0;
-  }
-  .links-container {
-    padding: 10px;
-    padding-right: 0;
-  }
-  .header-ul {
-    width: 100%;
-  }
-  > div:first-child {
-    position: fixed;
-    background-color: white;
-    border-bottom: 1px solid #b9bec4;
-    top: 0;
-    left: 120px;
-    right: 120px;
-    z-index: 100;
-  }
   Form {
     margin-top: 115px;
   }
   .carousel {
     width: 800px;
     .carousel-item {
-      height: 600px;
+      height: 620px;
       width: 800px;
-    }
-    .visually-hidden {
-      color: #13ebdd;
     }
     .carousel-item.active {
       display: flex;
@@ -45,15 +23,10 @@
         margin: 0;
       }
     }
-    .carousel-indicators button {
-      background-color: #13ebdd;
-    }
     button {
       transition: background-color 0.1s linear;
     }
     button.active {
-      background-color: white;
-      border: solid 2px #13ebdd;
       margin-top: 8px;
     }
     .carousel-item img {
@@ -61,10 +34,6 @@
       height: 600px;
       width: 600px;
       object-fit: scale-down;
-    }
-    span {
-      background-color: #13ebdd;
-      border-radius: 10px;
     }
   }
   .advertisement-info {
@@ -74,7 +43,6 @@
       margin-right: 10px;
     }
     > div {
-      border: 1px solid #b9bec4;
       border-radius: 5px;
     }
     > div:last-child {
@@ -106,7 +74,6 @@
   }
   .user-info {
     width: 100%;
-    border: 1px solid #b9bec4;
     border-radius: 5px;
     padding: 30px;
     display: flex;
@@ -115,13 +82,6 @@
     div {
       display: flex;
       justify-content: space-between;
-      button {
-        border: 0;
-        padding: 5px 30px;
-        background-color: #13ebdd;
-        border-radius: 10px;
-        color: white;
-      }
     }
     p {
       margin: 0;

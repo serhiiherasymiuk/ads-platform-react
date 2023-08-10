@@ -3,24 +3,19 @@ import { useDispatch } from "react-redux";
 import http_common from "../../../../http_common";
 import { Link } from "react-router-dom";
 import "./AdvertisementList.scss";
-import { setCategories } from "../../../../redux/reducers/CategoryReducer";
 import {
   IAdvertisement,
   IAdvertisementImage,
 } from "../../../../interfaces/advertisement";
 import { ModalAdvertisementsDelete } from "../../../../common/ModalAdvertisementDelete";
+import { ICategory } from "../../../../interfaces/category";
 
 export const AdvertisementList = () => {
-  const dispatch = useDispatch();
-
   const [advertisements, setAdvertisements] = useState<IAdvertisement[]>([]);
 
   useEffect(() => {
     http_common.get("api/Advertisements").then((resp) => {
       setAdvertisements(resp.data);
-    });
-    http_common.get("api/Categories").then((resp) => {
-      dispatch(setCategories(resp.data));
     });
   }, []);
 

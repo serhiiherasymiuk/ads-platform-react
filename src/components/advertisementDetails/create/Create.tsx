@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import "./Create.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import http_common from "../../../http_common";
@@ -15,9 +15,7 @@ import { ProfileContainer } from "../../home/profileContainer/ProfileContainer";
 export const Create = () => {
   const { user } = useSelector((store: any) => store.auth as IAuthUser);
 
-  const categories = useSelector(
-    (state: RootState) => state.category.categories
-  );
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   const initialValues: IAdvertisementCreate = {
     name: "",
@@ -30,6 +28,12 @@ export const Create = () => {
     categoryId: null,
     userId: "",
   };
+
+  useEffect(() => {
+    http_common.get("api/Categories").then((resp) => {
+      setCategories(resp.data);
+    });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -242,7 +246,7 @@ export const Create = () => {
                       <i
                         onClick={() => {
                           setImages((prevImages) =>
-                            prevImages.filter((image) => image !== f)
+                            prevImages.filter((image) => image !== f),
                           );
                         }}
                         className="bi bi-x-circle-fill"

@@ -10,13 +10,14 @@ import { RootState } from "../../../../redux/store";
 import axios from "axios";
 
 export const CategoryEdit = () => {
-  const categories = useSelector(
-    (state: RootState) => state.category.categories
-  );
-
   const { id } = useParams();
 
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
   useEffect(() => {
+    http_common.get("api/Categories").then((resp) => {
+      setCategories(resp.data);
+    });
     http_common.get(`api/Categories/${id}`).then(async (resp) => {
       setInitialValues((prevValues) => ({
         ...prevValues,
@@ -30,7 +31,7 @@ export const CategoryEdit = () => {
         `https://adsplatformstorage.blob.core.windows.net/category-images/${resp.data.image}`,
         {
           responseType: "blob",
-        }
+        },
       );
       const blob = response.data;
 
@@ -55,7 +56,7 @@ export const CategoryEdit = () => {
         }
         const categoryExists = categories.some(
           (c: ICategory) =>
-            c.name.toLowerCase() === value.toLowerCase() && c.id !== Number(id)
+            c.name.toLowerCase() === value.toLowerCase() && c.id !== Number(id),
         );
         return !categoryExists;
       }),
@@ -138,7 +139,7 @@ export const CategoryEdit = () => {
               />
             </div>
 
-            <div className="image">
+            <div className="image-list">
               {image ? (
                 <div>
                   <i

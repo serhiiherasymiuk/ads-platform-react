@@ -31,7 +31,7 @@ export const Login = () => {
             setIsSubmit(false);
             try {
               const result = await http_common.get(
-                `api/Users/checkEmailExists/${value}`
+                `api/Users/checkEmailExists/${value}`,
               );
               const { data } = result;
               return data;
@@ -40,7 +40,7 @@ export const Login = () => {
               return false;
             }
           } else return true;
-        }
+        },
       ),
     password: Yup.string().required("Password is required"),
   });
@@ -70,7 +70,7 @@ export const Login = () => {
           roles: user.roles,
         },
       });
-      navigate(-1);
+      navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -86,7 +86,7 @@ export const Login = () => {
               Authorization: `Bearer ${codeResponse.access_token}`,
               Accept: "application/json",
             },
-          }
+          },
         )
         .then((res) => {
           localStorage.access_token = codeResponse.access_token;

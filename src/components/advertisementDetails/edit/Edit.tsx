@@ -1,63 +1,71 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Edit.scss";
 import * as Yup from "yup";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import axios from "axios";
-import {RootState} from "../../../redux/store";
+import { RootState } from "../../../redux/store";
 import http_common from "../../../http_common";
-import {IAdvertisementEdit, IAdvertisementImage} from "../../../interfaces/advertisement";
-import {ICategory} from "../../../interfaces/category";
-import {IAuthUser} from "../../../interfaces/user";
-import {Header} from "../../home/header/Header";
-import {ProfileContainer} from "../../home/profileContainer/ProfileContainer";
+import {
+  IAdvertisementEdit,
+  IAdvertisementImage,
+} from "../../../interfaces/advertisement";
+import { ICategory } from "../../../interfaces/category";
+import { IAuthUser } from "../../../interfaces/user";
+import { Header } from "../../home/header/Header";
+import { ProfileContainer } from "../../home/profileContainer/ProfileContainer";
 
 export const Edit = () => {
   const { user } = useSelector((store: any) => store.auth as IAuthUser);
 
-  const categories = useSelector(
-    (state: RootState) => state.category.categories
-  );
-
   const { id } = useParams();
 
-  const [isAdvertisementExist, setIsAdvertismenetExist] = useState(true)
+  const [isAdvertisementExist, setIsAdvertismenetExist] = useState(true);
+
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   useEffect(() => {
-    http_common.get(`api/Advertisements/${id}`).then((resp) => {
-      if (resp === undefined) {
-        setIsAdvertismenetExist(false)
-        return;
-      }
-      if (resp.data.userId === user?.id) {
-        setIsAdvertismenetExist(true)
-        setInitialValues((prevValues) => ({
-          ...prevValues,
-          name: resp.data.name,
-          description: resp.data.description,
-          price: resp.data.price,
-          contactPerson: resp.data.contactPerson,
-          contactPhoneNumber: resp.data.contactPhoneNumber,
-          advertisementImages: [],
-          location: resp.data.location,
-          categoryId: resp.data.categoryId,
-          userId: resp.data.userId,
-        }));
+    http_common.get("api/Categories").then((resp) => {
+      setCategories(resp.data);
+    });
+    http_common
+      .get(`api/Advertisements/${id}`)
+      .then((resp) => {
+        if (resp === undefined) {
+          setIsAdvertismenetExist(false);
+          return;
+        }
+        if (resp.data.userId === user?.id) {
+          setIsAdvertismenetExist(true);
+          setInitialValues((prevValues) => ({
+            ...prevValues,
+            name: resp.data.name,
+            description: resp.data.description,
+            price: resp.data.price,
+            contactPerson: resp.data.contactPerson,
+            contactPhoneNumber: resp.data.contactPhoneNumber,
+            advertisementImages: [],
+            location: resp.data.location,
+            categoryId: resp.data.categoryId,
+            userId: resp.data.userId,
+          }));
 
-        const imageUrls = resp.data.advertisementImages.map(
+          const imageUrls = resp.data.advertisementImages.map(
             (image: IAdvertisementImage) =>
-                `https://adsplatformstorage.blob.core.windows.net/advertisement-images/${image.image}`
-        );
+              `https://adsplatformstorage.blob.core.windows.net/advertisement-images/${image.image}`,
+          );
 
-        downloadAndConvertImages(imageUrls).then((files) => {
-          setImages(files);
-        });
-      }
-      else {
-        navigate(-1)
-      }
-    }).catch()
+          downloadAndConvertImages(imageUrls).then((files) => {
+            setImages(files);
+          });
+
+          console.log(categories);
+        } else {
+          navigate(-1);
+        }
+      })
+      .catch();
   }, []);
 
   async function downloadAndConvertImages(urls: string[]): Promise<File[]> {
@@ -170,206 +178,213 @@ export const Edit = () => {
         </div>
         {isAdvertisementExist ? (
           <Formik
-              initialValues={initialValues}
-              onSubmit={handleSubmit}
-              validationSchema={advertisementSchema}
-              enableReinitialize={true}
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={advertisementSchema}
+            enableReinitialize={true}
           >
             {({ errors, touched, setFieldValue, handleBlur }) => (
-                <Form className="advertisement-edit-form">
-                  <h1>Edit Advertisement</h1>
-                  <div className="form-floating">
-                    <Field
-                        type="text"
-                        className={`form-control ${
-                            errors.name && touched.name ? "is-invalid" : ""
-                        }`}
-                        placeholder="Name"
-                        name="name"
-                        aria-label="Name"
-                        aria-describedby="basic-addon2"
-                    />
-                    <label htmlFor="floatingTextarea2">Name</label>
-                    <ErrorMessage
-                        name="name"
-                        component="div"
-                        className="invalid-feedback"
-                    />
-                  </div>
-                  <div className="form-floating">
-            <textarea
-                onBlur={handleBlur}
-                className={`form-control ${
-                    errors.description && touched.description ? "is-invalid" : ""
-                }`}
-                placeholder="Description"
-                name="description"
-                aria-label="Description"
-                aria-describedby="basic-addon2"
-                onChange={(event) => {
-                  setFieldValue("description", event.currentTarget.value);
-                }}
-                value={initialValues.description}
-            />
+              <Form className="advertisement-edit-form">
+                <h1>Edit Advertisement</h1>
+                <div className="form-floating">
+                  <Field
+                    type="text"
+                    className={`form-control ${
+                      errors.name && touched.name ? "is-invalid" : ""
+                    }`}
+                    placeholder="Name"
+                    name="name"
+                    aria-label="Name"
+                    aria-describedby="basic-addon2"
+                  />
+                  <label htmlFor="floatingTextarea2">Name</label>
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    className="invalid-feedback"
+                  />
+                </div>
+                <div className="form-floating">
+                  <textarea
+                    onBlur={handleBlur}
+                    className={`form-control ${
+                      errors.description && touched.description
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                    placeholder="Description"
+                    name="description"
+                    aria-label="Description"
+                    aria-describedby="basic-addon2"
+                    onChange={(event) => {
+                      setFieldValue("description", event.currentTarget.value);
+                    }}
+                    value={initialValues.description}
+                  />
                   <label>Description</label>
                   <ErrorMessage
-                      name="description"
-                      component="div"
-                      className="invalid-feedback"
+                    name="description"
+                    component="div"
+                    className="invalid-feedback"
                   />
                 </div>
                 <div className="form-floating">
                   <Field
-                      type="text"
-                      onBlur={handleBlur}
-                      className={`form-control ${
-                          errors.location && touched.location ? "is-invalid" : ""
-                      }`}
-                      placeholder="location"
-                      name="location"
-                      aria-label="Location"
-                      aria-describedby="basic-addon2"
+                    type="text"
+                    onBlur={handleBlur}
+                    className={`form-control ${
+                      errors.location && touched.location ? "is-invalid" : ""
+                    }`}
+                    placeholder="location"
+                    name="location"
+                    aria-label="Location"
+                    aria-describedby="basic-addon2"
                   />
                   <label htmlFor="floatingTextarea2">Location</label>
                   <ErrorMessage
-                      name="location"
-                      component="div"
-                      className="invalid-feedback"
+                    name="location"
+                    component="div"
+                    className="invalid-feedback"
                   />
                 </div>
                 <div className="form-floating">
                   <Field
-                      type="text"
-                      onBlur={handleBlur}
-                      className={`form-control ${
-                          errors.contactPerson && touched.contactPerson
-                              ? "is-invalid"
-                              : ""
-                      }`}
-                      placeholder="contactPerson"
-                      name="contactPerson"
-                      aria-label="Contact person"
-                      aria-describedby="basic-addon2"
+                    type="text"
+                    onBlur={handleBlur}
+                    className={`form-control ${
+                      errors.contactPerson && touched.contactPerson
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                    placeholder="contactPerson"
+                    name="contactPerson"
+                    aria-label="Contact person"
+                    aria-describedby="basic-addon2"
                   />
                   <label htmlFor="floatingTextarea2">Contact person</label>
                   <ErrorMessage
-                      name="contactPerson"
-                      component="div"
-                      className="invalid-feedback"
+                    name="contactPerson"
+                    component="div"
+                    className="invalid-feedback"
                   />
                 </div>
                 <div className="form-floating">
                   <Field
-                      type="text"
-                      onBlur={handleBlur}
-                      className={`form-control ${
-                          errors.contactPhoneNumber && touched.contactPhoneNumber
-                              ? "is-invalid"
-                              : ""
-                      }`}
-                      placeholder="contactPhoneNumber"
-                      name="contactPhoneNumber"
-                      aria-label="Contact phone number"
-                      aria-describedby="basic-addon2"
+                    type="text"
+                    onBlur={handleBlur}
+                    className={`form-control ${
+                      errors.contactPhoneNumber && touched.contactPhoneNumber
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                    placeholder="contactPhoneNumber"
+                    name="contactPhoneNumber"
+                    aria-label="Contact phone number"
+                    aria-describedby="basic-addon2"
                   />
-                  <label htmlFor="floatingTextarea2">Contact phone number</label>
+                  <label htmlFor="floatingTextarea2">
+                    Contact phone number
+                  </label>
                   <ErrorMessage
-                      name="contactPhoneNumber"
-                      component="div"
-                      className="invalid-feedback"
+                    name="contactPhoneNumber"
+                    component="div"
+                    className="invalid-feedback"
                   />
                 </div>
                 <div className="form-floating">
                   <Field
-                      type="number"
-                      onBlur={handleBlur}
-                      className={`form-control ${
-                          errors.price && touched.price ? "is-invalid" : ""
-                      }`}
-                      placeholder="price"
-                      name="price"
-                      aria-label="Price"
-                      aria-describedby="basic-addon2"
+                    type="number"
+                    onBlur={handleBlur}
+                    className={`form-control ${
+                      errors.price && touched.price ? "is-invalid" : ""
+                    }`}
+                    placeholder="price"
+                    name="price"
+                    aria-label="Price"
+                    aria-describedby="basic-addon2"
                   />
                   <label htmlFor="floatingTextarea2">Price</label>
                   <ErrorMessage
-                      name="price"
-                      component="div"
-                      className="invalid-feedback"
+                    name="price"
+                    component="div"
+                    className="invalid-feedback"
                   />
                 </div>
                 <div className="image-list">
                   {images.map((f: File, id: number) => {
                     return (
-                        <div key={id}>
-                          <i
-                              onClick={() => {
-                                setImages((prevImages) =>
-                                    prevImages.filter((image) => image !== f)
-                                );
-                              }}
-                              className="bi bi-x-circle-fill"
-                          ></i>
-                          <img src={URL.createObjectURL(f)} alt="" />
-                        </div>
+                      <div key={id}>
+                        <i
+                          onClick={() => {
+                            setImages((prevImages) =>
+                              prevImages.filter((image) => image !== f),
+                            );
+                          }}
+                          className="bi bi-x-circle-fill"
+                        ></i>
+                        <img src={URL.createObjectURL(f)} alt="" />
+                      </div>
                     );
                   })}
                   <label className="custom-file-upload">
                     <input
-                        multiple
-                        type="file"
-                        onChange={(event) => {
-                          const file =
-                              event.currentTarget.files && event.currentTarget.files[0];
-                          if (file) {
-                            setImages([...images, file]);
-                          }
-                        }}
+                      multiple
+                      type="file"
+                      onChange={(event) => {
+                        const file =
+                          event.currentTarget.files &&
+                          event.currentTarget.files[0];
+                        if (file) {
+                          setImages([...images, file]);
+                        }
+                      }}
                     />
                     <i className="bi bi-plus"></i>
                   </label>
                 </div>
                 <div className="form-floating">
                   <select
-                      onBlur={handleBlur}
-                      className={`form-select ${
-                          errors.categoryId && touched.categoryId ? "is-invalid" : ""
-                      }`}
-                      placeholder="categoryId"
-                      name="categoryId"
-                      aria-label="categoryId"
-                      aria-describedby="basic-addon2"
-                      onChange={(event) => {
-                        setFieldValue("categoryId", event.currentTarget.value);
-                      }}
+                    onBlur={handleBlur}
+                    className={`form-select ${
+                      errors.categoryId && touched.categoryId
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                    placeholder="categoryId"
+                    name="categoryId"
+                    aria-label="categoryId"
+                    aria-describedby="basic-addon2"
+                    onChange={(event) => {
+                      setFieldValue("categoryId", event.currentTarget.value);
+                    }}
                   >
                     <option value={-1}>Select a category</option>
                     {categories.map((c: ICategory) => {
                       return (
-                          <option
-                              selected={c.id === initialValues.categoryId}
-                              key={c.id}
-                              value={c.id}
-                          >
-                            {c.name}
-                          </option>
+                        <option
+                          selected={c.id === initialValues.categoryId}
+                          key={c.id}
+                          value={c.id}
+                        >
+                          {c.name}
+                        </option>
                       );
                     })}
                   </select>
                   <label>Category</label>
                   <ErrorMessage
-                      name="categoryId"
-                      component="div"
-                      className="invalid-feedback"
+                    name="categoryId"
+                    component="div"
+                    className="invalid-feedback"
                   />
                 </div>
 
                 <button
-                    onClick={() => {
-                      setFieldValue("advertisementImages", images);
-                    }}
-                    type="submit"
-                    className="btn btn-primary"
+                  onClick={() => {
+                    setFieldValue("advertisementImages", images);
+                  }}
+                  type="submit"
+                  className="btn btn-primary"
                 >
                   Edit
                 </button>
@@ -377,7 +392,9 @@ export const Edit = () => {
             )}
           </Formik>
         ) : (
-          <h1 className="advertismenet-not-exist">Advertisement does not exists</h1>
+          <h1 className="advertisement-not-exist">
+            Advertisement does not exists
+          </h1>
         )}
       </div>
     </>

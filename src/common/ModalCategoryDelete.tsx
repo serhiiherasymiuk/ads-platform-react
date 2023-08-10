@@ -2,7 +2,6 @@ import { Modal, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { FC, useState } from "react";
 import http_common from "../http_common";
-import { deleteCategory } from "../redux/reducers/CategoryReducer";
 
 interface Props {
   id: number;
@@ -12,12 +11,9 @@ interface Props {
 export const ModalCategoryDelete: FC<Props> = ({ id, text }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const dispatch = useDispatch();
-
   const handleDelete = async () => {
     try {
       await http_common.delete(`api/Categories/${id}`);
-      dispatch(deleteCategory(id));
     } catch (error) {
       console.error("Error deleting category:", error);
     }

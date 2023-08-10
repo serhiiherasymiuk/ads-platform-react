@@ -6,19 +6,23 @@ import http_common from "../../../../http_common";
 import { ICategory, ICategoryCreate } from "../../../../interfaces/category";
 import "./CategoryCreate.scss";
 import { RootState } from "../../../../redux/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const CategoryCreate = () => {
-  const categories = useSelector(
-    (state: RootState) => state.category.categories
-  );
-
   const initialValues: ICategoryCreate = {
     name: "",
     description: "",
     image: null,
     parentId: null,
   };
+
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
+  useEffect(() => {
+    http_common.get("api/Categories").then((resp) => {
+      setCategories(resp.data);
+    });
+  }, []);
 
   const categorySchema = Yup.object().shape({
     name: Yup.string()
@@ -29,7 +33,7 @@ export const CategoryCreate = () => {
           return false;
         }
         const categoryExists = categories.some(
-          (c: ICategory) => c.name.toLowerCase() === value.toLowerCase()
+          (c: ICategory) => c.name.toLowerCase() === value.toLowerCase(),
         );
         return !categoryExists;
       }),
@@ -43,7 +47,6 @@ export const CategoryCreate = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (values: ICategoryCreate) => {
-    console.log(values);
     try {
       await categorySchema.validate(values);
 
@@ -109,7 +112,7 @@ export const CategoryCreate = () => {
                 className="invalid-feedback"
               />
             </div>
-            <div className="image">
+            <div className="image-list">
               {image ? (
                 <div>
                   <i

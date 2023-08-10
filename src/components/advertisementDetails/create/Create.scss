@@ -5,4 +5,12 @@
     padding: 0;
     padding-bottom: 30px;
   }
+  > div:first-child {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0 120px;
+    z-index: 5;
+  }
 }

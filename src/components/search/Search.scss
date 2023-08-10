@@ -11,19 +11,18 @@
     padding: 0;
   }
   .links-container {
-    padding: 10px;
-    padding-right: 0;
+    padding: 10px 0 10px 10px;
   }
   .header-ul {
     width: 100%;
   }
   > div:first-child {
     position: fixed;
-    background-color: white;
-    border-bottom: 1px solid #b9bec4;
     top: 0;
-    left: 120px;
-    right: 120px;
+    left: 0;
+    right: 0;
+    padding: 0 120px;
+    z-index: 5;
   }
   Form {
     margin-top: 115px;
@@ -36,32 +35,23 @@
 }
 
 .select {
-  border: 1px solid #b9bec4;
   border-radius: 10px;
   a {
     text-decoration: none;
-    color: black;
   }
   > p:first-child {
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
   }
-  > p:first-child:hover {
-    background-color: #f2f4f5;
-  }
   p {
     margin: 0;
-    background-color: #f2f4f5;
     padding: 10px;
     width: 200px;
     display: flex;
     justify-content: space-between;
     transition: background-color 0.1s linear;
     cursor: pointer;
-  }
-  p:hover {
-    background-color: #13ebdd;
   }
   position: absolute;
   display: flex;
@@ -72,7 +62,6 @@
     margin-top: -45px;
     display: flex;
     flex-direction: column;
-    border: 1px solid #b9bec4;
   }
 }
 .open {

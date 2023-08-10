@@ -1,15 +1,20 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Profile.scss";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { IAuthUser, IUser } from "../../interfaces/user";
 import http_common from "../../http_common";
 import { useSelector } from "react-redux";
 import { IAdvertisement } from "../../interfaces/advertisement";
-export const Profile = () => {
+import { dark, light, Theme } from "../../styles/Theme.styled";
+
+interface Props {
+  toggleThemeFunc: () => void;
+}
+export const Profile: FC<Props> = ({ toggleThemeFunc }) => {
   const navigate = useNavigate();
 
   const { user, isAuth, isGoogle } = useSelector(
-    (store: any) => store.auth as IAuthUser
+    (store: any) => store.auth as IAuthUser,
   );
 
   const { username } = useParams();
@@ -48,25 +53,32 @@ export const Profile = () => {
     ];
     const month = monthNames[utcDate.getUTCMonth()];
     const year = utcDate.getUTCFullYear();
-    const formattedDate = `${day} ${month} ${year}`;
-    return formattedDate;
+    return `${day} ${month} ${year}`;
   };
 
   return (
     <>
       <div className="profile">
-        {!isAuth ? (
-          <h1>Profile</h1>
-        ) : user?.id === owner?.id ? (
-          <h1>My Profile</h1>
-        ) : (
-          <h1>Profile</h1>
-        )}
+        <div className="profile-head">
+          {!isAuth ? (
+            <h1>Profile</h1>
+          ) : user?.id === owner?.id ? (
+            <h1>My Profile</h1>
+          ) : (
+            <h1>Profile</h1>
+          )}
+          <div className="toggle-switch">
+            <label>
+              <input onChange={() => toggleThemeFunc()} type="checkbox" />
+              <span className="slider"></span>
+            </label>
+          </div>
+        </div>
         <div>
           <div>
             <img
-                src={`https://adsplatformstorage.blob.core.windows.net/user-images/${owner?.profilePicture}`}
-                alt=""
+              src={`https://adsplatformstorage.blob.core.windows.net/user-images/${owner?.profilePicture}`}
+              alt=""
             />
             <h2>{owner?.userName}</h2>
           </div>
@@ -129,7 +141,7 @@ export const Profile = () => {
                     </p>
                   </div>
                 </div>
-                {user?.id === a.userId &&
+                {user?.id === a.userId && (
                   <Link
                     to={`/edit/${a.id}`}
                     className="btn btn-warning btn-sm edit-icon"
@@ -138,7 +150,8 @@ export const Profile = () => {
                     }}
                   >
                     <i className="bi bi-pencil"></i>
-                  </Link>}
+                  </Link>
+                )}
               </div>
             );
           })}

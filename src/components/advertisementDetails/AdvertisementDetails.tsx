@@ -65,8 +65,8 @@ export const AdvertisementDetails = () => {
 
   return (
     <>
-      <div className="advertisementDetails">
-        <div>
+      <div className="advertisement-details">
+        <div className="header">
           <Header></Header>
           <ProfileContainer></ProfileContainer>
         </div>
@@ -82,7 +82,7 @@ export const AdvertisementDetails = () => {
                     data-bs-slide-to={index.toString()}
                     className={index === 0 ? "active" : ""}
                   ></button>
-                )
+                ),
               )}
             </div>
             <div className="carousel-inner">
@@ -97,7 +97,7 @@ export const AdvertisementDetails = () => {
                       alt={i.image}
                     />
                   </div>
-                )
+                ),
               )}
             </div>
             <button
@@ -148,8 +148,8 @@ export const AdvertisementDetails = () => {
           <div>
             <div onClick={() => navigate(`/profile/${user?.userName}`)}>
               <img
-                  src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
-                  alt=""
+                src={`https://adsplatformstorage.blob.core.windows.net/user-images/${user?.profilePicture}`}
+                alt=""
               />
               <div className="user-contact">
                 <p>{advertisement?.contactPerson}</p>

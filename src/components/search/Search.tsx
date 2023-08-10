@@ -7,14 +7,12 @@ import { IAdvertisement } from "../../interfaces/advertisement";
 import http_common from "../../http_common";
 import { ICategory } from "../../interfaces/category";
 import { SearchSection } from "./searchSection/SearchSection";
-import no_items_found from "../../assets/no_items_found.jpg"
-import {useSelector} from "react-redux";
-import {IAuthUser} from "../../interfaces/user";
+import no_items_found from "../../assets/no_items_found.png";
+import { useSelector } from "react-redux";
+import { IAuthUser } from "../../interfaces/user";
 
 export const Search = () => {
-  const { user } = useSelector(
-      (store: any) => store.auth as IAuthUser
-  );
+  const { user } = useSelector((store: any) => store.auth as IAuthUser);
 
   const { value, category } = useParams();
 
@@ -135,7 +133,7 @@ export const Search = () => {
 
   const handleSubcategoryMouseLeave = (id: number) => {
     setHoveredCategories((prevHoveredCategories) =>
-      prevHoveredCategories.filter((categoryId) => categoryId !== id)
+      prevHoveredCategories.filter((categoryId) => categoryId !== id),
     );
   };
 
@@ -247,7 +245,7 @@ export const Search = () => {
                     </p>
                   </div>
                 </div>
-                {user?.id === a.userId &&
+                {user?.id === a.userId && (
                   <Link
                     to={`/edit/${a.id}`}
                     className="btn btn-warning btn-sm edit-icon"
@@ -256,11 +254,14 @@ export const Search = () => {
                     }}
                   >
                     <i className="bi bi-pencil"></i>
-                  </Link>}
+                  </Link>
+                )}
               </div>
             );
           })}
-          {advertisements.length === 0 && <img className="no-items-found-img" src={no_items_found} alt=""/>}
+          {advertisements.length === 0 && (
+            <img className="no-items-found-img" src={no_items_found} alt="" />
+          )}
         </div>
       </div>
     </>

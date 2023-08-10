@@ -1,39 +1,4 @@
 .advertisement-create-form {
-  .image-list {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 30px;
-    div,
-    label {
-      margin-bottom: 10px;
-    }
-    div {
-      height: 200px;
-      width: 200px;
-      i {
-        position: relative;
-        left: 180px;
-        bottom: 10px;
-        color: red;
-        font-size: 30px;
-        cursor: pointer;
-      }
-    }
-    img {
-      height: 200px;
-      width: 200px;
-      margin-top: -40px;
-      object-fit: scale-down;
-      border-radius: 30px;
-      transition: 0.1s linear;
-      border: 1px solid white;
-    }
-    img:hover {
-      border: 1px solid rgb(142, 191, 255);
-      box-shadow: rgba(0, 42, 255, 0.184) 0px 0px 0px 4px;
-    }
-  }
   display: flex;
   flex-direction: column;
   gap: 15px;

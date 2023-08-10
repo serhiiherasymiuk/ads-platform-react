@@ -5,19 +5,13 @@ import http_common from "../../../../http_common";
 import { Link } from "react-router-dom";
 import "./CategoryList.scss";
 import { ICategory } from "../../../../interfaces/category";
-import { setCategories } from "../../../../redux/reducers/CategoryReducer";
 import { ModalCategoryDelete } from "../../../../common/ModalCategoryDelete";
 
 export const CategoryList = () => {
-  const categories = useSelector(
-    (state: RootState) => state.category.categories
-  );
-
-  const dispatch = useDispatch();
-
+  const [categories, setCategories] = useState<ICategory[]>([]);
   useEffect(() => {
     http_common.get("api/Categories").then((resp) => {
-      dispatch(setCategories(resp.data));
+      setCategories(resp.data);
     });
   }, []);
 

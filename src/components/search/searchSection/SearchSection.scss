@@ -2,9 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 10fr 3fr;
   align-items: center;
-  border: 1px solid #b9bec4;
   input {
-    background-color: #f2f4f5;
     border: 0;
     padding: 30px;
   }
@@ -18,8 +16,5 @@
   button {
     border: 0;
     padding: 30px 100px;
-    background-color: #13ebdd;
-    color: white;
   }
-  background-color: #f2f4f5;
 }
